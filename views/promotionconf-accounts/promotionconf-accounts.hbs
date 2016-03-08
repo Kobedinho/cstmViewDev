@@ -1,0 +1,23 @@
+<div class="row-fluid" id="accounts_content">
+    <!-- Criterio de cuentas -->
+    <h3> Clientes </h3>
+	<div>
+	    <div class="span4 form-group "  >
+	        <label class="control-label">Todos los clientes</label>
+	        <input id="account_filter_todos" maxlength="100" class="form-control" type="checkbox" checked="true" value="true">
+	    </div>
+	</div>
+	<div class="row-fluid hide " id="account_select_content" style="margin-top: 1em;">
+		<div class="span12" style="margin-left:0px; margin-top: 1em;" >
+			<div class="span4" style="margin-top: 1.5em;">
+			    <span class="form-control btn show_account_list" data-module="Accounts" ><i class="fa fa-search"></i> Buscar... </span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row-fluid grid_content" id="selected_accounts_list" style="margin: 1em 0;">
+    <!-- Tabla con las cuentas seleccionadas -->
+    <div class="well well-large well-transparent lead">
+        <i class="fa fa-spinner fa-spin"></i> Loading content...
+    </div>
+</div>

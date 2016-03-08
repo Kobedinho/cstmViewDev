@@ -1,0 +1,40 @@
+<div class="list-view" style="margin:1em 0em;">
+	<table class="table table-striped table-bordered table-condensed dataTable">
+	    <thead>
+	    	<tr>
+	            <th class="sorting orderByname" data-fieldname="name" data-orderby="" tabindex="-1">
+	                 <span>
+	                    Nombre
+	                 </span>
+	            </th>
+	            <th class="sorting orderByrfc_c" data-fieldname="rfc_c" data-orderby="" tabindex="-1">
+	                 <span>
+	                    RFC
+	                 </span>
+	            </th>
+	            <th class="sorting orderByrfc_c" data-fieldname="folio_qs_c" data-orderby="" tabindex="-1">
+	                 <span>
+	                    Folio QS
+	                 </span>
+	            </th>
+	            <th class="" data-fieldname="account_type" data-orderby="">
+	                 <span>
+	                    Tipo
+	                 </span>
+	            </th>
+	    	</tr>
+	    </thead>
+	    <tbody>
+	    	{{#each accountsArray}}
+				<tr data-account_id="{{id}}">
+					<td>{{name}}</td>
+					<td>{{rfc_c}}</td>
+					<td>{{folio_qs_c}}</td>
+					<td>{{account_type}}</td>
+				</tr>
+			{{else}}
+	  			<tr><td colspan="4"> No hay datos...</td></tr>
+			{{/each}}
+	    </tbody>
+	</table>
+</div>
