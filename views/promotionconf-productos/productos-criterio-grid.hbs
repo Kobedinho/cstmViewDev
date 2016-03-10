@@ -1,0 +1,29 @@
+<table class="productos-criterio">
+	<thead>
+		<tr>
+			<th>{{str 'LBL_NAME'}}</th>
+			<th>{{str 'LBL_CONDICION'}}</th>
+			<th>{{str 'LBL_CANTIDAD'}}</th>
+			<th>{{str 'LBL_YCANTIDAD'}}</th>
+			<th>{{str 'LBL_CANTIDAD_MINIMA'}}</th>
+			<th>{{str 'LBL_LIMITADO_A'}}</th>
+			<th>{{str 'LBL_INICIADOR'}}</th>
+			<th>{{str 'LBL_TIPO_UNIDAD'}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each collection.models}}
+		<tr>
+			<td>{{this.attributes.name}}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		{{/each}}
+		
+	</tbody>
+</table>
