@@ -3,6 +3,7 @@
 		var self = this;
 		self.context = options.context;
 		self._model = options.model;
+		self.accountsCollection = app.data.createBeanCollection('Accounts');
 		//self.accountsCollection = //app.data.createBeanCollection('Accounts');
 		debugger;
 	},
