@@ -39,5 +39,6 @@
 		var $container = this.$el.find('.productos-criterio-grid');
 		var template = app.template.get('promotionconf-productos.productos-criterio-grid.QS_Promociones');
 		$container.html(template(this)); 
+
 	}
 })
