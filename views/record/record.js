@@ -167,7 +167,14 @@
             "context": context,
             "showInDrawer": true,
         }, function (argument) {
-        	debugger; // configuracion terminada
+        	// refrescando el modelo actual
+	        //self.model.fetch();
+
+	        //Refreshes all subpanels        
+	        /*_.each(self.model._relatedCollections, function(collection){
+	            collection.fetch({relate: true});
+	        });*/
+        	//debugger; // configuracion terminada
         });
 	},
 

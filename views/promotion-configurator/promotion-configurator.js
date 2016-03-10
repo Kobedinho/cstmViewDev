@@ -10,7 +10,6 @@
 		Handlebars.registerPartial('promotion-configurator.user_filter', app.template.get('promotion-configurator.user_filter.QS_Promociones'));
 		Handlebars.registerPartial('promotion-configurator.products_filter', app.template.get('promotion-configurator.products_filter.QS_Promociones'));
 		Handlebars.registerPartial('promotion-configurator.regalos_filter', app.template.get('promotion-configurator.regalos_filter.QS_Promociones'));
-		
 	},
 	render: function(){
 		this._super('render', arguments);
@@ -18,6 +17,7 @@
 		self._initWizard();
 		self._showCustomViews();
 		$("#configurator_close_drawer").on('click',function(){
+			app.once('app:view:change', self.dispose);
     		app.drawer.close();
     	});
 	},
@@ -81,7 +81,7 @@
 			module: 'QS_Promociones',
 			model: self.model,
 		});
-		self.layout._components.push(self.accountsView);
+		//self.layout._components.push(self.accountsView);
 		$accountContent.append(self.accountsView.$el);
         self.accountsView.render();
         // productos
@@ -93,7 +93,7 @@
 			model: self.model,
 
 		});
-		self.layout._components.push(self.productosView);
+		//self.layout._components.push(self.productosView);
 		$productosContent.append(self.productosView.$el);
         self.productosView.render();
         // regalos
@@ -105,10 +105,13 @@
 			model: self.model,
 
 		});
-		self.layout._components.push(self.regalosView);
+		//self.layout._components.push(self.regalosView);
 		$regalosContent.append(self.regalosView.$el);
         self.regalosView.render();
 	},
 	// vistas personalizadas
 	// record, selection_list
+	dispose: function(){
+		app.trigger('promotion-configurator::close');
+	}
 })
