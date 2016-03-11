@@ -6,15 +6,19 @@
 	        <label class="control-label">Todos los clientes</label>
 	        <input id="account_filter_todos" maxlength="100" class="form-control" type="checkbox" checked="true" value="true">
 	    </div>
-	    <div class="span8">
+	    <div class="span8 hide" id="account_folios_content">
 	    	<!-- Seccion para pegar foliosQS -->
 		    <div id="paste_content">
 		        <textarea rows="5" cols="90" id="accounts_by_folio" class="input-xlarge wide tleft" style="background-color: #fdfdfd;" placeholder="Pega los folios QS aquí"></textarea>
 		    </div>
-		    <div  id="paste_content_message">
+		    <div  id="paste_content_message" class="hide">
 		        <div class="well well-large well-transparent lead">
-			        <i class="fa fa-spinner fa-spin"></i> Loading content...
+			        <span id="paste_content_loadingmsg"><i class="fa fa-spinner fa-spin"></i> Validando folios...</span>
+			        <span id="paste_content_cstmsg"></span>
 			    </div>
+		    </div>
+		    <div>
+		    	<span id="paste_content_clearbtn" class="btn btn-info hide">Limpiar</span>
 		    </div>
 	    </div>
 	</div>
@@ -26,9 +30,9 @@
 		</div>
 	</div>
 </div>
-<div class="row-fluid grid_content" id="selected_accounts_list" style="margin: 1em 0;">
+<div class="row-fluid grid_content hide" id="selected_accounts_list" style="margin: 1em 0;">
     <!-- Tabla con las cuentas seleccionadas -->
     <div class="well well-large well-transparent lead">
-        <i class="fa fa-spinner fa-spin"></i> Loading content...
+        <i class="fa fa-spinner fa-spin"></i> Cargando clientes...
     </div>
 </div>

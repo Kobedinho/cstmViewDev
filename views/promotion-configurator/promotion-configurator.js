@@ -81,9 +81,19 @@
 			module: 'QS_Promociones',
 			model: self.model,
 		});
-		//self.layout._components.push(self.accountsView);
 		$accountContent.append(self.accountsView.$el);
         self.accountsView.render();
+        // asesores
+        var $usersContent = $("#view_promotionconf_asesores");
+		self.usersView = app.view.createView({
+			context: self.context, //contextCstm,
+			name: 'promotionconf-asesores',
+			module: 'QS_Promociones',
+			model: self.model,
+		});
+		$usersContent.append(self.usersView.$el);
+        self.usersView.render();
+
         // productos
         var $productosContent = $("#view_promotionconf_productos");
 		self.productosView = app.view.createView({
