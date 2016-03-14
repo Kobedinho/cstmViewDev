@@ -14,39 +14,47 @@
 		// init events 
 		var btnShowCatalogLista = $(self.$el.find(".show_precio_list"));
 		var chkListaFilter = $(self.$el.find(".precio_filter_todos"));
-		//var pasteArea = $(self.$el.find(".lista_by_folio"));
-		//var cleanBtn = $(self.$el.find(".paste_content_clearbtn"));
 		chkListaFilter.on('change',function(hdl){
 			self._changeFilterVisibility(this,'precio_select_content');
+			// validando si el check esta encendido
+			if($(self.$el.find(".precio_filter_todos")).is(':checked')){
+				// ligar todas las listas desplegables a la promoción
+				app.alert.show('link_LP', { 
+					level: 'confirmation', 
+					messages: '¿Desea relacionar todas las listas de precio a la promoción?', 
+					title: 'Relación masiva',
+					onCancel: function() {
+						$(self.$el.find(".precio_filter_todos")).prop('checked', false);
+						$(self.$el.find(".precio_filter_todos")).trigger('change');
+                		return false;
+            		},
+            		onConfirm: function() {
+            			app.alert.show('link_LP_Process', { 
+							level: 'process', 
+							messages: 'Relacionando listas de precios.....', 
+							title: '',
+						});
+                		self._relacionaLP();
+            		}
+				});
+			}
 		});
 		btnShowCatalogLista.on('click',function(hdl){
 			self._showListDrawer();
 		});
-		//if(!self.model.get('todo_grupo_c') && !self.model.get('todas_companias_c')){
-			chkListaFilter.trigger('change');
-			$(self.$el.find('.precio_folios_content')).show();
-			$(self.$el.find('.selected_precios_list')).show();
-			// permitiendo que se elijan cuentas
-			self.listasCollection = self._model.getRelatedCollection('qs_promociones_qs01_listasprecio');//('qs_promociones_accounts');
-			self.listasCollection.fetch({relate: true,
-	    		success: function(records) {
-		    		self._showListasTable(self.listasCollection);
-				},
-				error: function (obj){
-					console.log("Error : "+obj);
-				}
-			});
-		/*}
-		else{
-			// alertando al usuario que puede pasar al siguiente paso porque la promocion aplica para todas las cuentas
-			var msg = "Puedes continuar con el paso siguiente ya que la promoción aplica para todas las cuentas... ";
-			app.alert.show('notifica_usuario_cuentas', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 15000,});
-			self.allListas = true;
-		}*/
-      	/*cleanBtn.on('click',function(){
-      		self._limpiarArea();
-      		cleanBtn.hide();
-      	})*/
+		chkListaFilter.trigger('change');
+		$(self.$el.find('.precio_folios_content')).show();
+		$(self.$el.find('.selected_precios_list')).show();
+		// permitiendo que se elijan cuentas
+		self.listasCollection = self._model.getRelatedCollection('qs_promociones_qs01_listasprecio');//('qs_promociones_accounts');
+		self.listasCollection.fetch({relate: true,
+    		success: function(records) {
+	    		self._showListasTable(self.listasCollection);
+			},
+			error: function (obj){
+				console.log("Error : "+obj);
+			}
+		});
 
 	},
 	_showListDrawer: function(){
@@ -73,7 +81,6 @@
 			link:'qs_promociones_qs01_listasprecio', //relationship name
 		});
 		contextCstm.prepare();
-		debugger;
 		self.listasLayout = app.view.createLayout({
 			context:contextCstm,
 			name: 'list',
@@ -90,6 +97,20 @@
 		else{
 			$(self.$el.find("."+idElement)).addClass('hide');	
 		}
+	},
+	_relacionaLP: function(){
+		var self = this;
+		var dataRequest = {idPromocion : self.model.get('id')};
+		var linkLP = app.api.call('create', '/rest/v10/QS_Promociones/listaprecios', dataRequest );
+		linkLP.xhr.done(function(data){
+			console.log('registros relacionados');
+			app.alert.dismiss('link_LP_Process');
+			app.alert.show('link_LP', { 
+				level: 'success', 
+				messages: 'Se han relacionado Todas las Listas de precio correctamente', 
+				title: 'Link',
+			});
+		});
 	},
 	_handlerClose: function(){
 		//this.listasLayout.dispose();
