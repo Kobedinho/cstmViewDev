@@ -4,6 +4,7 @@
 		var self = this;
 		self.context = options.context;
 		self._model = options.model;
+		self.parentView = options.parentView;
 		self.allUsers = true;
 		// event to dispose this view
 		app.once('promotion-configurator::close', _.bind(this._handlerClose, this))
@@ -18,7 +19,7 @@
 		var cleanBtn = $(self.$el.find("#paste_content_clearbtn"));
 		chkUserFilter.on('change',function(hdl){
 			if(self.allUsers){
-				var msg = "La promoción esta configurada para que aplique a todas los usuarios, si desea puede modificar este valor editando la promoción... ";
+				var msg = "La promoción esta configurada para todos los usuarios, si desea puede modificar este valor editando la promoción... ";
 				app.alert.show('notifica_usuarios_promo', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 15000,});
 				chkUserFilter.val(true);
 				chkUserFilter.attr('checked', true);
@@ -50,7 +51,7 @@
 		}
 		else{
 			// alertando al usuario que puede pasar al siguiente paso porque la promocion aplica para todas las cuentas
-			var msg = "Puedes continuar con el paso siguiente ya que la promoción aplica para todas las cuentas... ";
+			var msg = "Puedes continuar con el paso 3, la promoción aplica para todas los clientes... ";
 			app.alert.show('notifica_usuario_promo', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 15000,});
 			self.allUsers = true;
 		}
@@ -59,7 +60,7 @@
 			// procesando los foliosQS
 			var data = e.originalEvent.clipboardData.getData('Text');
 			e.target.value = data;
-			self._handlerFoliosQs(data);
+			self._handlerUserName(data);
 			cleanBtn.show();
       	});
       	cleanBtn.on('click',function(){
@@ -78,7 +79,7 @@
             	recContext: app.controller.context,
             	recParentModel: self._model,
             	recParentModule: self.module,
-            	recView: self,
+            	recView: self.parentView,
             },
         });
 	},
@@ -86,7 +87,7 @@
 		var self = this;
 		var $usersContent = $(self.$el.find('#selected_users_list'));
 		var contextCstm = this.context.getChildContext({
-			module: 'Accounts',
+			module: 'Users',
 			forceNew: false,
 			create: false,
 			link:'qs_promociones_users', //relationship name
@@ -108,7 +109,7 @@
 			$("#"+idElement).addClass('hide');	
 		}
 	},
-	_handlerFoliosQs : function(data){
+	_handlerUserName : function(data){
 		var self = this; 
 		var rows = data.split("\n");
 		console.log('rows - pasted -- '+rows);
@@ -152,7 +153,7 @@
             requests:[]
         };
 		_.each(self.users, function (userData) {
-        	var filter = {filter:[{folio_qs_c: userData.folio_qs}]};
+        	var filter = {filter:[{user_name: userData.user_name}]};
             dataRequest.requests.push({ method: "GET", url: "/v10/Users/filter?" + $.param(filter),});
         });
         var callbacks = { 

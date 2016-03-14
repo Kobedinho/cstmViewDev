@@ -5,6 +5,7 @@
 		self.context = options.context;
 		self._model = options.model;
 		self.allAccounts = true;
+		self.parentView = options.parentView;
 		// event to dispose this view
 		app.once('promotion-configurator::close', _.bind(this._handlerClose, this))
 	},
@@ -50,7 +51,7 @@
 		}
 		else{
 			// alertando al usuario que puede pasar al siguiente paso porque la promocion aplica para todas las cuentas
-			var msg = "Puedes continuar con el paso siguiente ya que la promoción aplica para todas las cuentas... ";
+			var msg = "Puedes continuar con el paso 2, la promoción aplica para todas las cuentas... ";
 			app.alert.show('notifica_usuario_cuentas', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 15000,});
 			self.allAccounts = true;
 		}
@@ -78,8 +79,11 @@
             	recContext: app.controller.context,
             	recParentModel: self._model,
             	recParentModule: self.module,
-            	recView: self,
+            	recView: self.parentView,
             },
+        },function(arg){
+        	console.log(self);
+        	debugger;
         });
 	},
 	_showAccountsTable: function(){
@@ -226,6 +230,14 @@
 		$(self.$el.find("#paste_content_final_messageOk")).html('');
 		$(self.$el.find("#accounts_by_folio")).val('');
 
+	},
+	_refresAccount: function(){
+		var term = "";
+        var options = { limit: null, query: term };
+        this.accountsList.context.get("collection").resetPagination();
+        this.accountsList.context.resetLoadFlag(false);
+        this.accountsList.context.set('skipFetch', false);
+        this.accountsList.context.loadData(options);
 	},
 	_handlerClose: function(){
 		this.accountsList.dispose();

@@ -47,6 +47,13 @@
             line-height: 1.428571429;
             border-radius: 15px;
         }
+        .drawer {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            overflow-y:auto;
+        }
     </style>
 <div class="container">
     <div class="row-fluid">
@@ -59,11 +66,11 @@ Cancelar</a>
     <div class="stepwizard offset3">
         <div class="stepwizard-row setup-panel">
             <div class="stepwizard-step">
-                <a href="#step-1" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                <a href="#step-1" type="button" class="btn btn-primary btn-circle" >1</a>
                 <p>Clientes</p>
             </div>
             <div class="stepwizard-step">
-                <a href="#step-2" type="button" class="btn btn-primary btn-circle" >2</a>
+                <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
                 <p>Asesores</p>
             </div>
             <div class="stepwizard-step">
