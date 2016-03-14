@@ -95,6 +95,16 @@
 		});
 		$usersContent.append(self.usersView.$el);
         self.usersView.render();
+        // Listas precio
+        var $listasContent = $("#view_promotionconf_listaprecios");
+		self.listasView = app.view.createView({
+			context: self.context, //contextCstm,
+			name: 'promotionconf-listaprecios',
+			module: 'QS_Promociones',
+			model: self.model,
+		});
+		$listasContent.append(self.listasView.$el);
+        self.listasView.render();
 
         // productos
         var $productosContent = $("#view_promotionconf_productos");
