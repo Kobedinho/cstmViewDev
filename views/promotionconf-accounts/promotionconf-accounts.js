@@ -82,8 +82,8 @@
             	recView: self.parentView,
             },
         },function(arg){
-        	console.log(self);
-        	debugger;
+        	// refrescar tabla
+        	self._refresAccount();
         });
 	},
 	_showAccountsTable: function(){
@@ -208,7 +208,6 @@
 			_.each(accounts,_.bind(function(account, index){
 				idsList.push(account.id);
 			},self));
-			debugger;
 			if(idsList.length){
 				var dataRequest = {link_name : 'qs_promociones_accounts',ids:idsList};
 				var linkAccounts = app.api.call('create', '/rest/v10/QS_Promociones/'+self.model.get('id')+'/link', dataRequest );
@@ -219,6 +218,8 @@
 						messages: 'Se han relacionado '+accounts.length+' registros ', 
 						title: 'Link',
 					});
+					// refrescando tabla
+					self._refresAccount();
 				});
 			}
 		}

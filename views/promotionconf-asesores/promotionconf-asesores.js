@@ -81,6 +81,9 @@
             	recParentModule: self.module,
             	recView: self.parentView,
             },
+        },function(arg){
+        	// refrescar tabla
+        	self._refresAccount();
         });
 	},
 	_showUsersTable: function(){
@@ -203,7 +206,6 @@
 			_.each(users,_.bind(function(user, index){
 				idsList.push(user.id);
 			},self));
-			debugger;
 			if(idsList.length){
 				var dataRequest = {link_name : 'qs_promociones_users',ids:idsList};
 				var linkUsers = app.api.call('create', '/rest/v10/QS_Promociones/'+self.model.get('id')+'/link', dataRequest );
@@ -214,6 +216,8 @@
 						messages: 'Se han relacionado '+users.length+' registros ', 
 						title: 'Link',
 					});
+					// refrescando tabla
+					self._refresUsersTable();
 				});
 			}
 		}
@@ -225,6 +229,14 @@
 		$(self.$el.find("#paste_content_final_messageOk")).html('');
 		$(self.$el.find("#users_by_identifier")).val('');
 
+	},
+	_refresUsersTable: function(){
+		var term = "";
+        var options = { limit: null, query: term };
+        this.usersList.context.get("collection").resetPagination();
+        this.usersList.context.resetLoadFlag(false);
+        this.usersList.context.set('skipFetch', false);
+        this.usersList.context.loadData(options);
 	},
 	_handlerClose: function(){
 		//this.usersList.dispose();

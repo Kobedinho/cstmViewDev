@@ -102,6 +102,7 @@
 			name: 'promotionconf-listaprecios',
 			module: 'QS_Promociones',
 			model: self.model,
+			parentView : self,
 		});
 		$listasContent.append(self.listasView.$el);
         self.listasView.render();
@@ -113,7 +114,7 @@
 			name: 'promotionconf-productos',
 			module: 'QS_Promociones',
 			model: self.model,
-
+			parentView : self,
 		});
 		//self.layout._components.push(self.productosView);
 		$productosContent.append(self.productosView.$el);
@@ -125,7 +126,7 @@
 			name: 'promotionconf-regalos',
 			module: 'QS_Promociones',
 			model: self.model,
-
+			parentView : self,
 		});
 		//self.layout._components.push(self.regalosView);
 		$regalosContent.append(self.regalosView.$el);

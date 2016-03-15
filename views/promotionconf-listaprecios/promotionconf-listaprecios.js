@@ -5,6 +5,7 @@
 		self.context = options.context;
 		self._model = options.model;
 		self.allListas = true;
+		self.parentView = options.parentView;
 		// event to dispose this view
 		app.once('promotion-configurator::close', _.bind(this._handlerClose, this))
 	},
@@ -55,10 +56,14 @@
 				console.log("Error : "+obj);
 			}
 		});
-
+		self.parentView.layout.on('filter:record:linked',_.bind(function(){
+			// refresca tabla
+			self._refresLPTable();
+		}));
 	},
 	_showListDrawer: function(){
 		var self = this;
+		console.log(self.module);
     	app.drawer.open({
           	layout: 'selection-list',
             context: {
@@ -67,7 +72,7 @@
             	recContext: app.controller.context,
             	recParentModel: self._model,
             	recParentModule: self.module,
-            	recView: self,
+            	recView: self.parentView,
             },
         });
 	},
@@ -110,7 +115,17 @@
 				messages: 'Se han relacionado Todas las Listas de precio correctamente', 
 				title: 'Link',
 			});
+			// refrescando tabla
+			self._refresLPTable();
 		});
+	},
+	_refresLPTable: function(){
+		var term = "";
+        var options = { limit: null, query: term };
+        this.listasLayout.context.get("collection").resetPagination();
+        this.listasLayout.context.resetLoadFlag(false);
+        this.listasLayout.context.set('skipFetch', false);
+        this.listasLayout.context.loadData(options);
 	},
 	_handlerClose: function(){
 		//this.listasLayout.dispose();
