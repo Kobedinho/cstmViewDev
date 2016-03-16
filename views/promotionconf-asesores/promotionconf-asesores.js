@@ -83,7 +83,7 @@
             },
         },function(arg){
         	// refrescar tabla
-        	self._refresAccount();
+        	self._refresUsersTable();
         });
 	},
 	_showUsersTable: function(){

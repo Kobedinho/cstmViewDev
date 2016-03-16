@@ -42,7 +42,8 @@ class opportunitiesLinkAllListPrice extends SugarApi
      */
     public function linkAllLists(ServiceBase $api, array $args)
     {
-        $qsPromocion = BeanFactory::getBean('QS_Promociones');
+        $GLOBALS['log']->fatal('args :::: '.print_r($args['idPromocion'],1));
+        $qsPromocion = BeanFactory::getBean('QS_Promociones',$args['idPromocion']);
         $link = 'qs_promociones_qs01_listasprecio';
         $qsPromocion->load_relationship($link);
         $lp_bean = BeanFactory::newBean('QS01_ListasPrecio');
@@ -50,9 +51,12 @@ class opportunitiesLinkAllListPrice extends SugarApi
         $sugarQuery->select(array('id'));
         $sugarQuery->from($lp_bean, array('team_security' => false));
         $res = $sugarQuery->execute();
-        foreach ($res as $idLP) {
-            $GLOBALS['log']->fatal('ligando id :::: '.$idLP['id']);
-            $qsPromocion->$link->add($idLP['id']);
+        if($qsPromocion->id){
+            foreach ($res as $idLP) {
+                $GLOBALS['log']->fatal('ligando id :::: '.$idLP['id']);
+                $GLOBALS['log']->fatal('ligando id :::: '.$qsPromocion->id);
+                $qsPromocion->$link->add($idLP['id']);
+            }
         }
         return true;
     }

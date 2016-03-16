@@ -1,0 +1,29 @@
+<div class="row-fluid">
+    <h3>{{str 'LBL_PROMOTIONCONF-PRODUCTOS_TITLE'}}</h3>
+</div>
+{{#each meta.fields}}
+    <div class="row-fluid panel_body {{name}}">
+        <div class="span12 record-cell" data-type="{{type}}" data-name="{{name}}">
+            <span class="record-cell" data-type="{{type}}" data-name="{{name}}">
+                <span class="table-cell-wrapper">
+                    <span class="record-label" data-name="{{name}}">{{str label ../this.model.module}}</span>
+                    <span class="index{{index}}" data-fieldname="{{name}}" data-index="{{index}}">
+                    {{field ../this model=../this.model template='edit'}}
+                    </span>
+                </span>
+            </span>
+        </div>
+    </div>
+{{/each}}
+<div class="row" style="margin-top: 1em;">
+	<div class="span3 "  >
+        <label class="control-label">Tipo de regalo</label>
+        <select id="tipoRegalo" >
+        	<option value="volumen">Volumen de regalo</option>
+        	<option value="descuento">Descuento financiero</option>
+        </select>
+    </div>
+    <div class="span4" style="margin-top: 2em;">
+	    <span class="form-control btn " data-module="users" ><i class="fa fa-search"></i> Crear regalo </span>
+	</div>
+</div>

@@ -8,8 +8,8 @@
 
 		//Handlebars.registerPartial('account_filter', app.template.get('promotion-configurator.account_filter.QS_Promociones'));
 		//Handlebars.registerPartial('promotion-configurator.user_filter', app.template.get('promotion-configurator.user_filter.QS_Promociones'));
-		Handlebars.registerPartial('promotion-configurator.products_filter', app.template.get('promotion-configurator.products_filter.QS_Promociones'));
-		Handlebars.registerPartial('promotion-configurator.regalos_filter', app.template.get('promotion-configurator.regalos_filter.QS_Promociones'));
+		//Handlebars.registerPartial('promotion-configurator.products_filter', app.template.get('promotion-configurator.products_filter.QS_Promociones'));
+		//Handlebars.registerPartial('promotion-configurator.regalos_filter', app.template.get('promotion-configurator.regalos_filter.QS_Promociones'));
 	},
 	render: function(){
 		this._super('render', arguments);
