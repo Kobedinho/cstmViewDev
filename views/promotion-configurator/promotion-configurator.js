@@ -7,7 +7,7 @@
         self.accountModel = app.data.createBean(moduleName);
 
 		//Handlebars.registerPartial('account_filter', app.template.get('promotion-configurator.account_filter.QS_Promociones'));
-		Handlebars.registerPartial('promotion-configurator.user_filter', app.template.get('promotion-configurator.user_filter.QS_Promociones'));
+		//Handlebars.registerPartial('promotion-configurator.user_filter', app.template.get('promotion-configurator.user_filter.QS_Promociones'));
 		Handlebars.registerPartial('promotion-configurator.products_filter', app.template.get('promotion-configurator.products_filter.QS_Promociones'));
 		Handlebars.registerPartial('promotion-configurator.regalos_filter', app.template.get('promotion-configurator.regalos_filter.QS_Promociones'));
 	},
@@ -76,14 +76,37 @@
 		// accounts
 		var $accountContent = $("#view_promotionconf_accounts");
 		self.accountsView = app.view.createView({
-			context: self.context, //contextCstm,
+			context: self.context,
 			name: 'promotionconf-accounts',
 			module: 'QS_Promociones',
 			model: self.model,
+			parentView : self,
 		});
-		//self.layout._components.push(self.accountsView);
 		$accountContent.append(self.accountsView.$el);
         self.accountsView.render();
+        // asesores
+        var $usersContent = $("#view_promotionconf_asesores");
+		self.usersView = app.view.createView({
+			context: self.context,
+			name: 'promotionconf-asesores',
+			module: 'QS_Promociones',
+			model: self.model,
+			parentView : self, 
+		});
+		$usersContent.append(self.usersView.$el);
+        self.usersView.render();
+        // Listas precio
+        var $listasContent = $("#view_promotionconf_listaprecios");
+		self.listasView = app.view.createView({
+			context: self.context, //contextCstm,
+			name: 'promotionconf-listaprecios',
+			module: 'QS_Promociones',
+			model: self.model,
+			parentView : self,
+		});
+		$listasContent.append(self.listasView.$el);
+        self.listasView.render();
+
         // productos
         var $productosContent = $("#view_promotionconf_productos");
 		self.productosView = app.view.createView({
@@ -91,7 +114,7 @@
 			name: 'promotionconf-productos',
 			module: 'QS_Promociones',
 			model: self.model,
-
+			parentView : self,
 		});
 		//self.layout._components.push(self.productosView);
 		$productosContent.append(self.productosView.$el);
@@ -103,7 +126,7 @@
 			name: 'promotionconf-regalos',
 			module: 'QS_Promociones',
 			model: self.model,
-
+			parentView : self,
 		});
 		//self.layout._components.push(self.regalosView);
 		$regalosContent.append(self.regalosView.$el);
