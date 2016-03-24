@@ -7,7 +7,7 @@
 		self.parentView = options.parentView;
 		self.allUsers = true;
 		// event to dispose this view
-		app.once('promotion-configurator::close', _.bind(this._handlerClose, this))
+		app.once('promotion-configurator::close', _.bind(this._handlerClose, this));
 	},
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
@@ -239,6 +239,7 @@
         this.usersList.context.loadData(options);
 	},
 	_handlerClose: function(){
-		//this.usersList.dispose();
+		if(this.usersList)
+			this.usersList.dispose();
 	},
 })

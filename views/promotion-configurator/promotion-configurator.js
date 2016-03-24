@@ -5,11 +5,6 @@
 		
 		var moduleName = 'Accounts';
         self.accountModel = app.data.createBean(moduleName);
-
-		//Handlebars.registerPartial('account_filter', app.template.get('promotion-configurator.account_filter.QS_Promociones'));
-		//Handlebars.registerPartial('promotion-configurator.user_filter', app.template.get('promotion-configurator.user_filter.QS_Promociones'));
-		//Handlebars.registerPartial('promotion-configurator.products_filter', app.template.get('promotion-configurator.products_filter.QS_Promociones'));
-		//Handlebars.registerPartial('promotion-configurator.regalos_filter', app.template.get('promotion-configurator.regalos_filter.QS_Promociones'));
 	},
 	render: function(){
 		this._super('render', arguments);
@@ -74,7 +69,7 @@
 	_showCustomViews: function(){
 		var self = this;
 		// accounts
-		var $accountContent = $("#view_promotionconf_accounts");
+		var $accountContent = $(self.$el.find("#view_promotionconf_accounts"));
 		self.accountsView = app.view.createView({
 			context: self.context,
 			name: 'promotionconf-accounts',
@@ -85,7 +80,7 @@
 		$accountContent.append(self.accountsView.$el);
         self.accountsView.render();
         // asesores
-        var $usersContent = $("#view_promotionconf_asesores");
+        var $usersContent = $(self.$el.find("#view_promotionconf_asesores"));
 		self.usersView = app.view.createView({
 			context: self.context,
 			name: 'promotionconf-asesores',
@@ -96,7 +91,7 @@
 		$usersContent.append(self.usersView.$el);
         self.usersView.render();
         // Listas precio
-        var $listasContent = $("#view_promotionconf_listaprecios");
+        var $listasContent = $(self.$el.find("#view_promotionconf_listaprecios"));
 		self.listasView = app.view.createView({
 			context: self.context, //contextCstm,
 			name: 'promotionconf-listaprecios',
@@ -108,7 +103,7 @@
         self.listasView.render();
 
         // productos
-        var $productosContent = $("#view_promotionconf_productos");
+        var $productosContent = $(self.$el.find("#view_promotionconf_productos"));
 		self.productosView = app.view.createView({
 			context: self.context, //contextCstm,
 			name: 'promotionconf-productos',
@@ -120,7 +115,7 @@
 		$productosContent.append(self.productosView.$el);
         self.productosView.render();
         // regalos
-        var $regalosContent = $("#view_promotionconf_regalos");
+        var $regalosContent = $(self.$el.find("#view_promotionconf_regalos"));
 		self.regalosView = app.view.createView({
 			context: self.context, //contextCstm,
 			name: 'promotionconf-regalos',
