@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row-fluid">
+        <div class="span4 offset8 " style="margin-top:1em;">
+            <a class="btn btn-invisible btn-link pull-right" id="volumenregalo_drawer_close" name="volumenregalo_close">Cancelar</a>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <h3>Volumen de regalo</h3>
+    </div>
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="span12">
+                {{#each meta.fields}}
+                    <div class="row-fluid panel_body {{name}}">
+                        <div class="span8 record-cell" data-type="{{type}}" data-name="{{name}}">
+                            <span class="record-cell" data-type="{{type}}" data-name="{{name}}">
+                                <span class="table-cell-wrapper">
+                                    <span class="record-label" data-name="{{name}}">{{str label ../this.model.module}}</span>
+                                    <span class="index{{index}}" data-fieldname="{{name}}" data-index="{{index}}">
+                                    {{field ../this model=../this.model template='edit'}}
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="span4">
+                <div style="margin-top: 1.7em;">
+                    <span class="form-control btn pull-left" data-module="users" name="volumenregalo_select_prod" ><i class="fa fa-search"></i> Seleccionar Producto </span>
+                </div>
+            </div>
+        </div>
+        <div class="span4">
+            <div style="margin-top: 1.7em;">
+                <textarea rows="5" cols="90" id="precios_by_folio" class="input-xlarge wide tleft" style="background-color: #fdfdfd;" placeholder="Pega los SKUs aquí"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        
+    </div>
+</div>

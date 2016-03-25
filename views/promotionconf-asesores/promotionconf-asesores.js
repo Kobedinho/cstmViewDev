@@ -7,7 +7,7 @@
 		self.parentView = options.parentView;
 		self.allUsers = true;
 		// event to dispose this view
-		app.once('promotion-configurator::close', _.bind(this._handlerClose, this))
+		app.once('promotion-configurator::close', _.bind(this._handlerClose, this));
 	},
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
@@ -83,7 +83,7 @@
             },
         },function(arg){
         	// refrescar tabla
-        	self._refresAccount();
+        	self._refresUsersTable();
         });
 	},
 	_showUsersTable: function(){
@@ -239,6 +239,7 @@
         this.usersList.context.loadData(options);
 	},
 	_handlerClose: function(){
-		//this.usersList.dispose();
+		if(this.usersList)
+			this.usersList.dispose();
 	},
 })

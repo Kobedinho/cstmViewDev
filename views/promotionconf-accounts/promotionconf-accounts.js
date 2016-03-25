@@ -7,7 +7,7 @@
 		self.allAccounts = true;
 		self.parentView = options.parentView;
 		// event to dispose this view
-		app.once('promotion-configurator::close', _.bind(this._handlerClose, this))
+		app.once('promotion-configurator::close', _.bind(this._handlerClose, this));
 	},
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
@@ -241,6 +241,7 @@
         this.accountsList.context.loadData(options);
 	},
 	_handlerClose: function(){
-		this.accountsList.dispose();
+		if(this.accountsList)
+			this.accountsList.dispose();
 	},
 })
