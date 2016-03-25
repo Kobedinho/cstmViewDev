@@ -128,7 +128,7 @@
 	_clearPaste: function (argument) {
 		this.$el.find('textarea[name="paste"]').val('');
 		this.collection.reset([]);
-		this.listView.render();
+		//this.listView.render();
 	}
 
 
