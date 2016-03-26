@@ -1,4 +1,8 @@
 ({
+	plugins: [
+        'GridBuilder',
+    ],
+
 	events: {
 		'click a[name="guardar-grupo"]': '_handlerSave',
 		'keyup textarea[name="paste"]': '_handlerPaste',
@@ -9,7 +13,11 @@
 		this._super('initialize', arguments);
 		var self = this;
 		this.model = app.data.createBean('QS_ProductosCriterio');
+		this.module = 'QS_ProductosCriterio';
+
 		this.meta.fields = [];
+		this.meta.columns = 2;
+		this.meta.labelsOnTop = true;
 
 		var module = _.clone(app.metadata.getModule('QS_ProductosCriterio'));
 
@@ -19,11 +27,12 @@
 			//module.fields[item].template = 'edit';
 			self.meta.fields.push(module.fields[item]);
 		});
+		this.grid = this.getGridBuilder(this.meta).build().grid;
 
 		this.model.on('change', _.bind(this._handlerChangeModel, this));
 		
 		this.action = 'edit';
-
+		//debugger;
 		this._initListView();
 
 	},
@@ -48,7 +57,7 @@
 					ycantidad_c: self.model.get('ycantidad_c'),
 					cantidad_minima_c: self.model.get('cantidad_minima_c'),
 					limitado_a_c: self.model.get('limitado_a_c'),
-					qs_productoscriterio_producttemplatesproducttemplates_ida: model.get('name')
+					qs_productoscriterio_producttemplatesproducttemplates_ida: model.get('id')
 				});
 			});
 		}
@@ -75,11 +84,14 @@
 			var rows = text.split('\n');
 			var model = null;
 			_.each(rows, function(row, index) {
-				model = app.data.createBean('QS_ProductosCriterio', {name: row});
+				model = app.data.createBean('QS_ProductosCriterio', {id: row});
 				self.collection.add(model);
 			})
 			//self.listView.render();
 			self._validateSkus(rows, _.bind(self._handlerValidateSkus, self));
+			this.$el.find('.sku-list-container').removeClass('hidden');
+			this.$el.find('th.sorting').removeClass('sorting');
+			this.$el.find('th.orderBy').removeClass('orderBy');
 		}
 	},
 
@@ -94,16 +106,15 @@
 		});
 		
 		var fields = [{
-			name: "name",
-			label: "LBL_NAME"
+			name: "id",
+			label: "LBL_ID"
 		}];
-		var editableFields = ['condicion','cantidad','ycantidad_c','cantidad_minima_c','limitado_a_c','iniciador_c','tipo_unidad_c'];
 
 		self.listView =  app.view.createView({
 			context: context,
 			type: 'list',
 			name: 'producto-criterio-designer-list',
-			module: 'QS_ProductosCriterio',
+			module: 'ProductTemplates',
 			template: app.template.get('promotionconf-productos-edit-group.list.QS_Promociones'),
 			layout: self,
 			meta: {
@@ -114,7 +125,6 @@
 				]
 			}
 		});
-		this.collection.on('reset add remove', _.bind(self.listView.render, self))
 	},
 
 	_renderHtml: function(){
@@ -129,6 +139,8 @@
 		//debugger;
 		this.$el.find('textarea[name="paste"]').val('');
 		this.collection.reset([]);
+		this.$el.find('.sku-list-container').addClass('hidden');
+
 	},
 
 	_validateSkus: function (skus, callback) {

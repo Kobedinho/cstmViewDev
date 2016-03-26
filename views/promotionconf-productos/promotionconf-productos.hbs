@@ -1,20 +1,6 @@
 <div class="row-fluid">
 	<h3>{{str 'LBL_PROMOTIONCONF_PRODUCTOS_TITLE'}}</h3>
 </div>
-{{#each meta.fields}}
-	<div class="row-fluid panel_body {{name}}">
-		<div class="span12 record-cell" data-type="{{type}}" data-name="{{name}}">
-			<span class="record-cell" data-type="{{type}}" data-name="{{name}}">
-	            <span class="table-cell-wrapper">
-					<span class="record-label" data-name="{{name}}">{{str label ../this.model.module}}</span>
-					<span class="index{{index}}" data-fieldname="{{name}}" data-index="{{index}}">
-					{{field ../this model=../this.model template='edit'}}
-					</span>
-				</span>
-			</span>
-		</div>
-	</div>
-{{/each}}
 
 <div class="row-fluid productos-criterio-grupos">
 	

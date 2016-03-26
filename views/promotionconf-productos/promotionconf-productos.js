@@ -1,31 +1,21 @@
 ({
 	events:{
-		'keyup textarea[name="paste"]': '_handlerPaste',
-		'click a[name="clear-paste"]': '_clearPaste'
+
 	},
+
 	initialize: function (argument) {
 		this._super('initialize', arguments);
-		this.meta = {
-			fields: [
-				{
-					name: 'todos_usuario_c',
-					type: 'bool',
-					label: 'LBL_TODOS_USUARIO'
-				},
-			]
-		}
-		this.model = app.data.createBean('QS_Promociones');
-		this.action = 'detail';
-		this.collection = app.data.createBeanCollection('QS_ProductosCriterio', []);
-		this._initListView();
+		
+		this._initGroupListView();
 	},
 
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
 		var self = this;
-		var $container = this.$el.find('.productos-criterio-grid');
-		self.listView.render();
-		$container.html(self.listView.el);
+		var $container = this.$el.find('.productos-criterio-grupos');
+		self.groupLisView.render();
+		$container.html(self.groupLisView.el);
+		//debugger;
 	},
 
 	_handlerPaste: function(evt) {
@@ -44,40 +34,18 @@
 		}
 	},
 
-	_initListView: function (argument) {
+	_initGroupListView: function (argument) {
 		var self = this;
-		var template = app.template.get('promotionconf-productos.productos-criterio-grid.QS_Promociones');
-		var model = app.data.createBean('QS_ProductosCriterio');
-		var context = app.context.getContext({
-			collection: this.collection,
-			model: model,
-			module: model.module
-		});
-		var module = _.clone(app.metadata.getModule('QS_ProductosCriterio'));
-		var fields = [];
-		fields.push(module.fields.name);
+		// var context = app.context.getContext({
+		// 	collection: this.collection,
+		// 	module: model.module
+		// });
 
-		var editableFields = ['condicion','cantidad','ycantidad_c','cantidad_minima_c','limitado_a_c','iniciador_c','tipo_unidad_c'];
-
-		_.each(editableFields, function (item) {
-			module.fields[item].template = 'edit';
-			fields.push(module.fields[item]);
-		});
-
-		self.listView =  app.view.createView({
-			context: context,
-			type: 'list',
-			name: 'producto-criterio-designer-list',
-			module: 'QS_ProductosCriterio',
-			template: app.template.get('promotionconf-productos.list.QS_Promociones'),
-			layout: self,
-			meta: {
-				panels: [
-					{
-						fields: fields
-					}
-				]
-			}
+		self.groupLisView =  app.view.createView({
+			//context: context,
+			type: 'promotionconf-productos-group-list',
+			name: 'promotionconf-productos-group-list',
+			module: 'QS_Promociones'
 		});
 	},
 

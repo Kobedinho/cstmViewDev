@@ -13,6 +13,14 @@
 	_handlerCreateGroup: function (argument) {
 		this.$el.find('.group-list-container').addClass('hidden');
 		this.$el.find('.group-container').removeClass('hidden');
+		var groupEditView =  app.view.createView({
+			//context: context,
+			type: 'promotionconf-productos-edit-group',
+			name: 'promotionconf-productos-edit-group',
+			module: 'QS_Promociones'
+		});
+		groupEditView.render();
+		this.$el.find('.group-container').html(groupEditView.el);
 	},
 
 	_handlerItemClick: function () {
