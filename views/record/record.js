@@ -15,7 +15,6 @@
         this.context.on('button:configura_promocion:click', this._configurePromotion, this);
 
         self.accountModule = App.metadata.getModule('Accounts');
-
 	},
 
 	_renderHtml: function () {

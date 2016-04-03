@@ -6,13 +6,15 @@
 	events: {
 		'click a[name="guardar-grupo"]': '_handlerSave',
 		'keyup textarea[name="paste"]': '_handlerPaste',
-		'click a[name="clear-paste"]': '_clearPaste'
+		'click a[name="clear-paste"]': '_clearPaste',
+		'click a[name="cancel"]': '_handlerCancel',
 	},
 
 	initialize: function () {
 		this._super('initialize', arguments);
 		var self = this;
-		this.model = app.data.createBean('QS_ProductosCriterio');
+		var modelData = _.extend({ grupo_padre_c:'', grupo_c:'1', iniciador_c: true }, this.options.productoCriterio||{});
+		this.model = app.data.createBean('QS_ProductosCriterio', modelData);
 		this.module = 'QS_ProductosCriterio';
 
 		this.meta.fields = [];
@@ -34,6 +36,7 @@
 		this.action = 'edit';
 		//debugger;
 		this._initListView();
+		//this._initGrupoListView();
 
 	},
 
@@ -57,10 +60,14 @@
 					ycantidad_c: self.model.get('ycantidad_c'),
 					cantidad_minima_c: self.model.get('cantidad_minima_c'),
 					limitado_a_c: self.model.get('limitado_a_c'),
-					qs_productoscriterio_producttemplatesproducttemplates_ida: model.get('id')
+					iniciador_c: self.model.get('iniciador_c'),
+					grupo_c: self.model.get('grupo_c'),
+					grupo_padre_c: self.model.get('grupo_padre_c'),
+					qs_productoscriterio_producttemplatesproducttemplates_ida: model.get('id'),
 				});
 			});
 		}
+		this.trigger('onSave', this.model, this.collection);
 	},
 
 	_validate: function (argument) {
@@ -89,9 +96,7 @@
 			})
 			//self.listView.render();
 			self._validateSkus(rows, _.bind(self._handlerValidateSkus, self));
-			this.$el.find('.sku-list-container').removeClass('hidden');
-			this.$el.find('th.sorting').removeClass('sorting');
-			this.$el.find('th.orderBy').removeClass('orderBy');
+			
 		}
 	},
 
@@ -127,12 +132,26 @@
 		});
 	},
 
+	_initGrupoListView: function (argument) {
+		var self = this
+		self.groupListView =  app.view.createView({
+			//context: context,
+			type: 'promotionconf-productos-group-list',
+			name: 'promotionconf-productos-group-list',
+			module: 'QS_Promociones',
+			grupo: self.model.get('grupo_c')
+		});
+	},
+
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
 		var self = this;
-		var $container = this.$el.find('.sku-list-container');
+		var $containerSku = this.$el.find('.sku-list-container');
+		var $containerGrupo = this.$el.find('.group-list-container');
 		self.listView.render();
-		$container.html(self.listView.el);
+		$containerSku.html(self.listView.el);
+		// self.groupListView.render();
+		// $containerGrupo.html(self.groupListView.el);
 	},
 
 	_clearPaste: function() {
@@ -140,6 +159,9 @@
 		this.$el.find('textarea[name="paste"]').val('');
 		this.collection.reset([]);
 		this.$el.find('.sku-list-container').addClass('hidden');
+		this.$el.find('.group-list-container').addClass('hidden');
+		this.$el.find('a[name="guardar-grupo"]').addClass('hidden');
+		this.$el.find('a[name="clear-paste"]').addClass('hidden');
 
 	},
 
@@ -186,7 +208,15 @@
 		self.collection.each(function (model, index) {
 			model.set((skuResults[index].status === 200 ? '_is_valid': '_is_invalid'), true);
 		});
-
+		self.$el.find('.sku-list-container').removeClass('hidden');
+		self.$el.find('.group-list-container').removeClass('hidden');
+		self.$el.find('th.sorting').removeClass('sorting');
+		self.$el.find('th.orderBy').removeClass('orderBy');
+		self.$el.find('a[name="clear-paste"]').removeClass('hidden');
 		self.listView.render();
 	},
+
+	_handlerCancel: function (argument) {
+		this.trigger('onCancel');
+	}
 })
