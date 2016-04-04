@@ -1,0 +1,35 @@
+<div class="row-fluid control-group">
+    <span class="grupo-name">Grupo: {{model.attributes.grupo_c}}</span>
+    {{#if model.attributes.grupo_padre_c}}
+        <span class="grupo-padre">Grupo padre: {{model.attributes.grupo_padre_c}}</span>
+    {{/if}}
+</div>
+<div class="form-horizontal">
+    <div class="row-fluid control-group" >
+        <a class="btn hidden" name="guardar-grupo">{{str 'LBL_GUARDAR_GRUPO'}}</a>
+        <a class="btn hidden" name="clear-paste">{{str 'LBL_CLEAR_PASTE'}}</a>
+        <a class="btn" name="cancel">{{str 'LBL_CANCEL_PASTE'}}</a>
+    </div>
+</div>
+<div class="form-horizontal">
+    {{#each grid}}
+        <div class="row-fluid control-group">
+            {{#each this}}
+            <div class="span{{span}} record-cell{{#if cell_css_class}} {{cell_css_class}}{{/if}}" data-type="{{type}}" data-name="{{name}}">
+                <div class="record-label" data-name="{{name}}">
+                    {{str vname ../../module}}
+                </div>
+                <span class="normal{{#if css}} {{css}}{{/if}} index{{index}}" data-fieldname="{{name}}" data-index="{{index}}">
+                    {{field ../../this model=../../model template=../../action}}
+                </span>
+            </div>
+            {{/each}}
+        </div>
+    {{/each}}
+</div>
+
+<div class="row-fluid paste-container hidden" >
+    <textarea name="paste"></textarea>
+</div>
+<div class="row-fluid sku-list-container hidden" ></div>
+<div class="row-fluid group-list-container hidden" ></div>

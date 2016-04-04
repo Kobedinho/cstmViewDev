@@ -15,11 +15,9 @@
     <thead>
     <tr>
         {{#each fields}}
-            <th class="{{#isSortable ../../module this}}sorting{{#eq ../../../orderBy.field name}}_{{../../../../orderBy.direction}}{{/eq}} orderBy{{name}}{{/isSortable}}{{#if widthClass}} {{widthClass}}{{/if}}"
-                {{#if styles}} style="{{styles}}"{{/if}}
-                {{#if name}} data-fieldname="{{name}}"{{/if}} data-orderby="{{orderBy}}">
+            <th>
                  <span>
-                    {{str vname ../../module}}
+                    {{str label ../../module}}
                  </span>
             </th>
         {{/each}}
@@ -29,8 +27,8 @@
     {{#each ../collection.models}}
     <tr name="{{module}}_{{attributes.id}}" class="single {{#if attributes._is_invalid}}invalid{{/if}}{{#if attributes._is_valid}}valid{{/if}}">
         {{#each ../fields}}
-            <td{{#if align}} class="{{align}}"{{/if}}>
-                {{field ../../../this model=../this template=this.template}}
+            <td>
+                {{field ../../../this model=../this template="detail"}}
             </td>
         {{/each}}
     </tr>
