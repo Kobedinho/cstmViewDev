@@ -1,51 +1,6 @@
 <div class="row-fluid group-list-container" >
-<a class="btn" name="create-group">{{str 'LBL_BTN_CREATE_GROUP_PRODUCTOS_CRITERIO'}}</a>
-{{!-- <ul>
-	{{#each collection.models}}
-	<li class="group"><a href="#">{{attributes.name}}</a></li>
-	{{/each}}
-</ul> --}}
-{{#ppArbol arbol}}
-{{!-- <ul class="arbol">
-	<li class="group">
-		<div><a href="#">Nombre de grupo 1</a></div>
-		<div>Condiciones mayor a x y unidad de medida</div>	
-		<span class="label">Iniciador</span><a class="btn">Agregar grupo</a>
-		<ul>
-			<li class="group">
-				<div><a href="#">Nombre de grupo 1-1</a></div>
-				<div>Condiciones mayor a x y unidad de medida</div>	
-				<a class="btn">Agregar grupo</a>
-				<ul>
-					
-				</ul>
-				<div>Sin grupos hijos</div>
-			</li>
-			<li class="group">
-				<div><a href="#">Nombre de grupo 1-2</a></div>
-				<div>Condiciones mayor a x y unidad de medida</div>	
-				<a class="btn">Agregar grupo</a>
-				<ul>
-					
-				</ul>
-				<div>Sin grupos hijos</div>
-			</li>
-		</ul>
-		<div class="hidden">Sin grupos hijos</div>
-
-	</li>
-	<li class="group">
-		<div><a href="#">Nombre de grupo 2</a></div>
-		<div>Condiciones mayor a x y unidad de medida</div>	
-		<span class="label">Iniciador</span><a class="btn">Agregar grupo</a>
-		<ul>
-			
-		</ul>
-		<div>Sin grupos hijos</div>
-
-	</li>
-</ul> --}}
+<a class="btn agregar-grupo">{{str 'LBL_BTN_CREATE_GROUP_PRODUCTOS_CRITERIO'}}</a>
+{{#ppArbol}}{{arbol}}{{/ppArbol}}
 </div>
 <div class="row-fluid group-container hidden" >
-	group container edit
 </div>

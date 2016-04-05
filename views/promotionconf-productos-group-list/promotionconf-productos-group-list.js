@@ -1,6 +1,6 @@
 ({
 	events:{
-		'click a[name="create-group"]': '_handlerCreateGroup',
+		'click a.agregar-grupo': '_handlerCreateGroup',
 		//'click li.group a': '_handlerItemClick',
 	},
 
@@ -11,7 +11,7 @@
 		this.collection = app.data.createBeanCollection('QS_ProductosCriterio', []);
 		this.collection.on('reset add remove', _.bind(this.render, this));
 		this.grupos = {};
-		//debugger;
+		this.arbol = [];
 	},
 
 	_handlerCreateGroup: function (argument) {

@@ -36,13 +36,13 @@
 
 	_initGroupListView: function (argument) {
 		var self = this;
-		// var context = app.context.getContext({
-		// 	collection: this.collection,
-		// 	module: model.module
-		// });
+		var context = app.context.getContext({
+			// collection: this.collection,
+			// module: model.module
+		});
 
 		self.groupLisView =  app.view.createView({
-			//context: context,
+			context: context,
 			type: 'promotionconf-productos-group-list',
 			name: 'promotionconf-productos-group-list',
 			module: 'QS_Promociones'
