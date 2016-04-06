@@ -25,6 +25,7 @@
 		// }
 		var nodoPadre = grupoPadre ? grupoPadre.nodo : null;
 		var grupo = (nodoPadre ? nodoPadre.grupo + '-' : '') + ((nodoPadre ? nodoPadre.grupos:this.arbol).length+1).toString();
+		var iniciador = nodoPadre ? false : true;
 
 		this.groupEditView =  app.view.createView({
 			type: 'promotionconf-productos-edit-group',
@@ -34,7 +35,7 @@
 			productoCriterio: {
                 grupo_c: grupo,
                 grupo_padre_c: this.grupoPadre ,
-                iniciador_c: true
+                iniciador_c: iniciador
             }
 		});
 		this.groupEditView.on('onSave', _.bind(this._handlerSaveGrupo, this));
@@ -43,15 +44,22 @@
 		this.$el.find('.group-container').html(this.groupEditView.el);
 	},
 
-	_handlerSaveGrupo: function (productoCriterio, productosCriterioCollection, grupoPadre) {
+	_handlerSaveGrupo: function (productoCriterio, productosCriterioCollection, nodoPadre) {
+		var condicion = productoCriterio.get('condicion') + ' de ' + productoCriterio.get('cantidad') + ' en ' + productoCriterio.get('tipo_unidad_c');
 		var nodo = {
 			grupo: productoCriterio.get('grupo_c'),
 			grupoPadre: null,
 			iniciador: productoCriterio.get('iniciador_c'),
 			name: productoCriterio.get('name'),
+			condicion: condicion,
 			grupos: []
 		};
-		this.arbol.push(nodo);
+		if(nodoPadre){
+			nodoPadre.grupos.push(nodo);
+		}
+		else{
+			this.arbol.push(nodo);
+		}
 		this.grupos[productoCriterio.get('grupo_c')] = {
 			model: productoCriterio,
 			collection: productosCriterioCollection,
