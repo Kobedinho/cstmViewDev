@@ -48,7 +48,8 @@
 	},
 	_handlerNewGroup : function(){
 		var self = this;
-		debugger;
+		// ocultando listado
+		self.$el.find(".contentList").hide();
 		var tipoRegalo = self.$el.find("#tipoRegalo").val();
 		var grupoView = null;
 		if(tipoRegalo==="volumen"){
@@ -66,6 +67,7 @@
 			});
 		}
 		grupoView.render();
+		grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
 		self.contentGroup.append(grupoView.$el);
         
 	}
