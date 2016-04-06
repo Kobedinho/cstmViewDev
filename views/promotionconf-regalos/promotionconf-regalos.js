@@ -1,4 +1,7 @@
 ({
+	events:{
+		'click span.crear-grupo': '_handlerNewGroup',
+	},
 	initialize:function(args){
 		this._super('initialize', arguments);
 		var self = this;
@@ -13,6 +16,7 @@
 		$btnCreaRegalos.on('click',function(){
 			self._crearRegalo();
 		})
+		self.contentGroup = self.$el.find('.nvoGrupo-content');
 	},
 	_crearRegalo: function(){
 		var self = this;
@@ -41,5 +45,28 @@
 			$regalosContent.append(self.regalosView.$el);
 	        self.regalosView.render();
 		}
+	},
+	_handlerNewGroup : function(){
+		var self = this;
+		debugger;
+		var tipoRegalo = self.$el.find("#tipoRegalo").val();
+		var grupoView = null;
+		if(tipoRegalo==="volumen"){
+			grupoView = app.view.createView({
+				context: self.context, //contextCstm,
+				name: 'promotionconf-volumenregalo',
+				module: 'QS_Promociones',
+			});
+		}
+		else{
+			grupoView = app.view.createView({
+				context: self.context, //contextCstm,
+				name: 'promotionconf-descuentofinanciero',
+				module: 'QS_Promociones',
+			});
+		}
+		grupoView.render();
+		self.contentGroup.append(grupoView.$el);
+        
 	}
 })
