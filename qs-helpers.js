@@ -16,7 +16,7 @@
             var arbol = '<ul class="pp-arbol grupos">';
             //debugger;
             function getNodo(nodoData, nodoString) {
-                nodoString = '<li class="group" data-grupo="'+nodoData.grupo+'">' 
+                nodoString = '<li class="group" data-grupo="'+nodoData.grupo+'" data-grupo-padre="'+nodoData.grupoPadre+'">' 
                 + '<div class="header">' + (nodoData.iniciador ? '<span class="label iniciador">Iniciador</span>' : '')+'<a href="#">'+nodoData.name+'</a></div>'
                 + '<div class="condicion">'+nodoData.condicion+'</div> '
                 + '<a class="btn agregar-grupo">Agregar grupo</a>';
