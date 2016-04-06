@@ -1,13 +1,11 @@
 ({
 	events:{
 		'click a.agregar-grupo': '_handlerCreateGroup',
-		//'click li.group a': '_handlerItemClick',
 	},
 
 	initialize: function () {
 		this._super('initialize', arguments);
 		this.nextGrupo = 1;
-		//this.grupo = this.options.grupo || '';
 		this.collection = app.data.createBeanCollection('QS_ProductosCriterio', []);
 		this.collection.on('reset add remove', _.bind(this.render, this));
 		this.grupos = {};
@@ -17,30 +15,49 @@
 	_handlerCreateGroup: function (argument) {
 		this.$el.find('.group-list-container').addClass('hidden');
 		this.$el.find('.group-container').removeClass('hidden');
+		var $li = $(arguments[0].target).closest('li');
+		//var grupo
+		//var nodoPadre
+		//debugger;
+		var grupoPadre = $li ? this.grupos[$li.data('grupo')] : null;
+		// if(grupoPadre){
+		// 	debugger;
+		// }
+		var nodoPadre = grupoPadre ? grupoPadre.nodo : null;
+		var grupo = (nodoPadre ? nodoPadre.grupo + '-' : '') + ((nodoPadre ? nodoPadre.grupos:this.arbol).length+1).toString();
+
 		this.groupEditView =  app.view.createView({
 			type: 'promotionconf-productos-edit-group',
 			name: 'promotionconf-productos-edit-group',
 			module: 'QS_Promociones',
+			nodoPadre: nodoPadre,
 			productoCriterio: {
-                grupo_c: (this.grupo ? this.grupo + ' - ' : "")  + this.nextGrupo,
+                grupo_c: grupo,
                 grupo_padre_c: this.grupoPadre ,
                 iniciador_c: true
             }
 		});
 		this.groupEditView.on('onSave', _.bind(this._handlerSaveGrupo, this));
-		this.groupEditView.on('onCancel', _.bind(this._handlerSaveGrupo, this));
+		this.groupEditView.on('onCancel', _.bind(this._handlerCancelEditGrupo, this));
 		this.groupEditView.render();
 		this.$el.find('.group-container').html(this.groupEditView.el);
 	},
 
 	_handlerSaveGrupo: function (productoCriterio, productosCriterioCollection, grupoPadre) {
-		//this.collection.add(productoCriterio);
+		var nodo = {
+			grupo: productoCriterio.get('grupo_c'),
+			grupoPadre: null,
+			iniciador: productoCriterio.get('iniciador_c'),
+			name: productoCriterio.get('name'),
+			grupos: []
+		};
+		this.arbol.push(nodo);
 		this.grupos[productoCriterio.get('grupo_c')] = {
 			model: productoCriterio,
 			collection: productosCriterioCollection,
-			grupo_c: productoCriterio.get('grupo_c'),
-			grupo_padre_c: productoCriterio.get('grupo_padre_c')
-		};
+			nodo: nodo
+		}
+		this.render();
 	},
 
 	_handlerCancelEditGrupo: function (argument) {
@@ -49,6 +66,5 @@
 		this.groupEditView.remove();
 		this.groupEditView = null;
 	}
-
 
 });
