@@ -65,7 +65,7 @@
 				});
 			});
 		}
-		this.trigger('onSave', this.model, this.collection);
+		this.trigger('onSave', this.model, this.collection, this.options.nodoPadre);
 	},
 
 	_validate: function (argument) {

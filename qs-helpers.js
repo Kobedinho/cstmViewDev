@@ -17,9 +17,10 @@
             //debugger;
             function getNodo(nodoData, nodoString) {
                 nodoString = '<li class="group" data-grupo="'+nodoData.grupo+'" data-grupo-padre="'+nodoData.grupoPadre+'">' 
-                + '<div class="header">' + (nodoData.iniciador ? '<span class="label iniciador">Iniciador</span>' : '')+'<a href="#">'+nodoData.name+'</a></div>'
-                + '<div class="condicion">'+nodoData.condicion+'</div> '
-                + '<a class="btn agregar-grupo">Agregar grupo</a>';
+                + '<div class="header">' + (nodoData.iniciador ? '<span class="label iniciador">Iniciador</span>' : '')+'<a href="#" class="name">'+nodoData.name+'</a>'
+                + '<span class="condicion">'+nodoData.condicion+'</span>'
+                + '<a class="btn agregar-grupo">Encadenamiento</a>'
+                + '</div>'
                 if(nodoData.grupos.length){
                     nodoString += '<ul class="grupos">';
                     _.each(nodoData.grupos, function (nodoHijoData) {
