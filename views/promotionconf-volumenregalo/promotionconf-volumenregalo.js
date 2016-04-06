@@ -2,19 +2,20 @@
 	events:{
 		'click a[name="volumenregalo_close"]': '_closeDrawer',
 		'click span[name="volumenregalo_select_prod"]': '_seleccionaProductos',
+		'click span[name="cancel_group"]':'_cancelNewGroup',
 	},
 	initialize:function(args){
 		this._super('initialize', arguments);
 		this.meta = {
 			fields: [
-				{
-					name: 'tipo',
-					type: 'enum',
-					label: 'LBL_TIPO'
-				},
+				{ name: 'tipo', type: 'enum',label: 'LBL_TIPO'},
+				{ name: 'piezas', type: 'text', label: 'LBL_PIEZAS'},
+				{ name: 'maximo', type: 'text', label: 'LBL_MAXIMO'},
+				{ name: 'precio_c', type: 'currency', label: 'LBL_PRECIO'},
+				{ name: 'qs_volumenregalo_producttemplatesproducttemplates_ida', type: 'relate', label: 'LBL_PRODUCTTEMPLATES_QS_VOLUMENREGALO_1_FROM_PRODUCTTEMPLATES_TITLE'},
 			]
 		}
-		this.action = 'detail';
+		this.action = 'edit';
 		this.model = app.data.createBean('QS_VolumenRegalo');
 		this.productsCollection = app.data.createBeanCollection('ProductTemplates');
 	},
@@ -69,6 +70,10 @@
           	view: self.listViewXX,
           	context: context,
         });
+	},
+	_cancelNewGroup: function(){
+		var self = this;
+		self.trigger('cancelNewGroup_click');
 	},
 
 })
