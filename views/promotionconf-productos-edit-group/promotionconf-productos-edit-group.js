@@ -34,9 +34,7 @@
 		this.model.on('change', _.bind(this._handlerChangeModel, this));
 		
 		this.action = 'edit';
-		//debugger;
 		this._initListView();
-		//this._initGrupoListView();
 
 	},
 
