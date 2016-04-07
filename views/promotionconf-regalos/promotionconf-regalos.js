@@ -36,14 +36,15 @@
 	        var $regalosContent = $("#view_promotionconf_regalos");
 			self.regalosView = app.view.createView({
 				context: self.context, //contextCstm,
-				name: 'promotionconf-regalos',
+				name: 'promotionconf-descuentofinanciero',
 				module: 'QS_Promociones',
-				model: self.model,
-				parentView : self,
+				//model: self.model,
+				//parentView : self,
 			});
+	        self.regalosView.render();
+	        debugger;
 			//self.layout._components.push(self.regalosView);
 			$regalosContent.append(self.regalosView.$el);
-	        self.regalosView.render();
 		}
 	},
 	_handlerNewGroup : function(){
@@ -60,6 +61,7 @@
 			});
 		}
 		else{
+			debugger;
 			grupoView = app.view.createView({
 				context: self.context, //contextCstm,
 				name: 'promotionconf-descuentofinanciero',
@@ -67,7 +69,7 @@
 			});
 		}
 		grupoView.render();
-		grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
+		//grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
 		self.contentGroup.append(grupoView.$el);
         
 	}
