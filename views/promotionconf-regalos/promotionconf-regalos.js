@@ -61,7 +61,6 @@
 			});
 		}
 		else{
-			debugger;
 			grupoView = app.view.createView({
 				context: self.context, //contextCstm,
 				name: 'promotionconf-descuentofinanciero',
@@ -69,8 +68,21 @@
 			});
 		}
 		grupoView.render();
-		//grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
+		grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
+		grupoView.on('onCancel', _.bind(this._handlerCancelGrupo, this));
 		self.contentGroup.append(grupoView.$el);
-        
+
+		self.$el.find('.groupContent').removeClass('hidden');
+		self.$el.find('.contentList').addClass('hidden');
+	},
+
+	_handlerCancelGrupo: function (argument) {
+		this.$el.find('.groupContent').addClass('hidden');
+		this.$el.find('.contentList').removeClass('hidden');
+	},
+
+	_handlerSaveGrupo: function (model) {
+		this.$el.find('.groupContent').addClass('hidden');
+		this.$el.find('.contentList').removeClass('hidden');
 	}
 })
