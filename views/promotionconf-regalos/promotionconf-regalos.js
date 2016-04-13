@@ -18,7 +18,7 @@
 		})
 		self.contentGroup = self.$el.find('.nvoGrupo-content');
 	},
-	_crearRegalo: function(){
+	/*_crearRegalo: function(){
 		var self = this;
 		var $select = self.$el.find('#tipoRegalo');
 		if($select.val()=="volumen"){
@@ -45,11 +45,12 @@
 			$regalosContent.append(self.regalosView.$el);
 	        self.regalosView.render();
 		}
-	},
+	},*/
 	_handlerNewGroup : function(){
 		var self = this;
 		// ocultando listado
 		self.$el.find(".contentList").hide();
+		self.$el.find(".groupContent").show();
 		var tipoRegalo = self.$el.find("#tipoRegalo").val();
 		var grupoView = null;
 		if(tipoRegalo==="volumen"){
@@ -57,6 +58,7 @@
 				context: self.context, //contextCstm,
 				name: 'promotionconf-volumenregalo',
 				module: 'QS_Promociones',
+				idPromo: self.model.get('id'),
 			});
 		}
 		else{
@@ -67,8 +69,19 @@
 			});
 		}
 		grupoView.render();
-		grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
-		self.contentGroup.append(grupoView.$el);
+		grupoView.on('onCancelNewGroup', function(){
+			self.$el.find(".groupContent").hide();
+			self.$el.find(".contentList").show();
+		});
+		grupoView.on('onNewGroupSaved', function(model,collection){
+			self.$el.find(".groupContent").hide();
+			self.$el.find(".contentList").show();
+			console.log('**********************************');
+			console.log(model);
+			console.log(collection);
+			console.log('**********************************');
+		});
+		self.contentGroup.html(grupoView.$el);
         
 	}
 })
