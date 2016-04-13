@@ -4,8 +4,8 @@
         'SugarLogic',
     ],
     events:{
-    	'a[name="save"]': '_handlerSave',
-    	'a[name="cancel"]': '_handlerCancel',
+    	'click a[name="save"]': '_handlerSave',
+    	'click a[name="cancel"]': '_handlerCancel',
     	'keyup textarea[name="paste"]': '_handlerPaste'
     },
 	initialize:function(){
@@ -136,9 +136,10 @@
 				messages: 'Skus invalidos, retire los valores no validos.',
 				autoClose: true
 			});
+			self.$el.find('a[name="save"]').addClass('hidden');
 		}
 		else{
-			self.$el.find('a[name="guardar-grupo"]').removeClass('hidden');
+			self.$el.find('a[name="save"]').removeClass('hidden');
 		}
 
 		self.collection.each(function (model, index) {
@@ -147,7 +148,6 @@
 		self.$el.find('.sku-list-container').removeClass('hidden');
 		self.$el.find('th.sorting').removeClass('sorting');
 		self.$el.find('th.orderBy').removeClass('orderBy');
-		self.$el.find('a[name="clear-paste"]').removeClass('hidden');
 		self.listView.render();
 	},
 

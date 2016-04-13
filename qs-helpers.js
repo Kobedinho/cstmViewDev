@@ -44,6 +44,23 @@
             return new Handlebars.SafeString(arbol);
         });
 
+        Handlebars.registerHelper("regalosArbol", function (text)
+        { 
+            function getNodo(nodoData) {
+                var nodo = '<li class="grupo">';
+                nodo += '<span class="name">'+nodoData.condicion+'</span>';
+                nodo += '<a class="btn" name="create-group">Encadenamiento</a>';
+                nodo += '</li>';
+                return nodo;
+            }
+            var arbol = '<ul class="regalos-arbol">';
+            _.each(this.arbol, function (nodo) {
+                arbol += getNodo(nodo);
+            });
+            arbol += '</ul>';
+            return new Handlebars.SafeString(arbol);
+        });
+
 
     });
 })(SUGAR.App); 
