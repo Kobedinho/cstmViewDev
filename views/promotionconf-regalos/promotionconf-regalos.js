@@ -50,8 +50,8 @@
 	_handlerNewGroup : function(){
 		var self = this;
 		// ocultando listado
-		self.$el.find(".contentList").hide();
-		self.$el.find(".groupContent").show();
+		self.$el.find(".contentList").addClass('hidden');//.hide();
+		self.$el.find(".groupContent").removeClass('hidden');//.show();
 		var tipoRegalo = self.$el.find("#tipoRegalo").val();
 		var grupoView = null;
 		if(tipoRegalo==="volumen"){
@@ -87,7 +87,7 @@
 		*/
 		grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
 		grupoView.on('onCancel', _.bind(this._handlerCancelGrupo, this));
-		self.contentGroup.append(grupoView.$el);
+		self.contentGroup.html(grupoView.$el);
 
 		self.$el.find('.groupContent').removeClass('hidden');
 		self.$el.find('.contentList').addClass('hidden');
@@ -98,8 +98,12 @@
 		this.$el.find('.contentList').removeClass('hidden');
 	},
 
-	_handlerSaveGrupo: function (model) {
+	_handlerSaveGrupo: function (model,collection) {
 		this.$el.find('.groupContent').addClass('hidden');
 		this.$el.find('.contentList').removeClass('hidden');
+		console.log('**********************************');
+		console.log(model);
+		console.log(collection);
+		console.log('**********************************');
 	}
 })

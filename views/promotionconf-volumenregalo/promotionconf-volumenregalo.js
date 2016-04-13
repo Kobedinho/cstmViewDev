@@ -199,7 +199,7 @@
 
 			}
 		}
-		self.trigger('onNewGroupSaved', this.model, this.collection);
+		self.trigger('onSave', this.model, this.collection);
 	},
 	_validate: function (argument) {
 		if(!this.collection.length){
@@ -224,7 +224,7 @@
 	},
 	_cancelNewGroup: function(){
 		var self = this;
-		self.trigger('onCancelNewGroup');
+		self.trigger('onCancel');
 	},
 	_validateFields : function() {
 		console.log("bean modificado .... ");
