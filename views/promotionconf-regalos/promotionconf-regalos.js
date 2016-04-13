@@ -36,14 +36,15 @@
 	        var $regalosContent = $("#view_promotionconf_regalos");
 			self.regalosView = app.view.createView({
 				context: self.context, //contextCstm,
-				name: 'promotionconf-regalos',
+				name: 'promotionconf-descuentofinanciero',
 				module: 'QS_Promociones',
-				model: self.model,
-				parentView : self,
+				//model: self.model,
+				//parentView : self,
 			});
+	        self.regalosView.render();
+	        debugger;
 			//self.layout._components.push(self.regalosView);
 			$regalosContent.append(self.regalosView.$el);
-	        self.regalosView.render();
 		}
 	},*/
 	_handlerNewGroup : function(){
@@ -69,6 +70,7 @@
 			});
 		}
 		grupoView.render();
+		/*
 		grupoView.on('onCancelNewGroup', function(){
 			self.$el.find(".groupContent").hide();
 			self.$el.find(".contentList").show();
@@ -82,6 +84,22 @@
 			console.log('**********************************');
 		});
 		self.contentGroup.html(grupoView.$el);
-        
+		*/
+		grupoView.on('onSave', _.bind(this._handlerSaveGrupo, this));
+		grupoView.on('onCancel', _.bind(this._handlerCancelGrupo, this));
+		self.contentGroup.append(grupoView.$el);
+
+		self.$el.find('.groupContent').removeClass('hidden');
+		self.$el.find('.contentList').addClass('hidden');
+	},
+
+	_handlerCancelGrupo: function (argument) {
+		this.$el.find('.groupContent').addClass('hidden');
+		this.$el.find('.contentList').removeClass('hidden');
+	},
+
+	_handlerSaveGrupo: function (model) {
+		this.$el.find('.groupContent').addClass('hidden');
+		this.$el.find('.contentList').removeClass('hidden');
 	}
 })

@@ -6,7 +6,6 @@
 	events: {
 		'click a[name="guardar-grupo"]': '_handlerSave',
 		'keyup textarea[name="paste"]': '_handlerPaste',
-		'click a[name="clear-paste"]': '_clearPaste',
 		'click a[name="cancel"]': '_handlerCancel',
 	},
 
@@ -65,7 +64,7 @@
 				});
 			});
 		}
-		this.trigger('onSave', this.model, this.collection);
+		this.trigger('onSave', this.model, this.collection, this.options.nodoPadre);
 	},
 
 	_validate: function (argument) {
