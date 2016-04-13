@@ -5,7 +5,8 @@
     ],
     events:{
     	'a[name="save"]': '_handlerSave',
-    	'a[name="cancel"]': '_handlerCancel'
+    	'a[name="cancel"]': '_handlerCancel',
+    	'keyup textarea[name="paste"]': '_handlerPaste'
     },
 	initialize:function(){
 		this._super('initialize', arguments);
@@ -28,6 +29,15 @@
 		this.action = 'edit';
 
 		this.model.on('change', _.bind(this._handlerChangeModel, this));
+		this._initListView();
+	},
+
+	_renderHtml: function(){
+		this._super('_renderHtml', arguments);
+		var self = this;
+		var $containerSku = this.$el.find('.sku-list-container');
+		self.listView.render();
+		$containerSku.html(self.listView.el);
 	},
 
 	_handlerChangeModel: function (argument) {
@@ -59,13 +69,12 @@
 				break;
 			}
 		}
-		
+		this.$el.find('textarea[name="paste"]').val('');
 		if(showSaveButton){
-			this.$el.find('a[name="save"]').removeClass('hidden');
+			this.$el.find('.paste-container').removeClass('hidden');
 		}
 		else{
-			this.$el.find('a[name="save"]').addClass('hidden');
-
+			this.$el.find('.paste-container').addClass('hidden');
 		}
 	},
 	_handlerSave: function (argument) {
@@ -73,6 +82,107 @@
 	},
 	_handlerCancel: function (argument) {
 		this.trigger('onCancel');
-	}
+	},
+
+	_handlerPaste: function (evt) {
+		var self = this;
+		var text = evt.target.value;
+		self.collection.reset([]);
+		if(text){
+			var rows = text.split('\n');
+			var model = null;
+			_.each(rows, function(row, index) {
+				model = app.data.createBean('QS_DescuentosFinancieros', {id: row});
+				self.collection.add(model);
+			})
+			//self.listView.render();
+			self._validateSkus(rows, _.bind(self._handlerValidateSkus, self));
+			
+		}
+	},
+
+	_validateSkus: function (skus, callback) {
+		var data = {
+			requests: []
+		};
+		_.each(skus, function (sku) {
+			data.requests.push({
+				url: '/v10/ProductTemplates/' + sku,
+				method: 'GET'
+			});
+		});
+		app.api.call('create', '/rest/v10/bulk', data, {
+			success: _.bind(function(data) {
+				var result = true;
+				var skuResults = [];
+				_.each(data, function (response, index) {
+					var skuResult = {sku: skus[index], status: response.status};
+					if(result){
+						result = response.status === 200;
+					}
+					skuResults.push(skuResult);
+				});
+				callback(result, skuResults);
+			}, this),
+		});
+	},
+
+	_handlerValidateSkus: function (result, skuResults) {
+		var self = this;
+		
+		if(!result){
+			app.alert.show('Skus invalidos', {
+				level: 'error',
+				messages: 'Skus invalidos, retire los valores no validos.',
+				autoClose: true
+			});
+		}
+		else{
+			self.$el.find('a[name="guardar-grupo"]').removeClass('hidden');
+		}
+
+		self.collection.each(function (model, index) {
+			model.set((skuResults[index].status === 200 ? '_is_valid': '_is_invalid'), true);
+		});
+		self.$el.find('.sku-list-container').removeClass('hidden');
+		self.$el.find('th.sorting').removeClass('sorting');
+		self.$el.find('th.orderBy').removeClass('orderBy');
+		self.$el.find('a[name="clear-paste"]').removeClass('hidden');
+		self.listView.render();
+	},
+
+	_initListView: function (argument) {
+		var self = this;
+		//var template = app.template.get('promotionconf-productos.productos-criterio-grid.QS_Promociones');
+		var model = app.data.createBean('QS_DescuentosFinancieros');
+		var context = app.context.getContext({
+			collection: self.collection,
+			model: model,
+			module: model.module
+		});
+		
+		var fields = [{
+			name: "id",
+			label: "LBL_ID"
+		}];
+
+		self.listView =  app.view.createView({
+			context: context,
+			type: 'list',
+			name: 'producto-criterio-designer-list',
+			module: 'ProductTemplates',
+			template: app.template.get('promotionconf-productos-edit-group.list.QS_Promociones'),
+			layout: self,
+			meta: {
+				panels: [
+					{
+						fields: fields
+					}
+				]
+			}
+		});
+	},
+	
+
 
 })

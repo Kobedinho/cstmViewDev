@@ -129,17 +129,6 @@
 		});
 	},
 
-	_initGrupoListView: function (argument) {
-		var self = this
-		self.groupListView =  app.view.createView({
-			//context: context,
-			type: 'promotionconf-productos-group-list',
-			name: 'promotionconf-productos-group-list',
-			module: 'QS_Promociones',
-			grupo: self.model.get('grupo_c')
-		});
-	},
-
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
 		var self = this;
