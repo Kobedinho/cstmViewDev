@@ -16,7 +16,7 @@
             var arbol = '<ul class="pp-arbol grupos">';
             //debugger;
             function getNodo(nodoData, nodoString) {
-                nodoString = '<li class="group" data-grupo="'+nodoData.grupo+'" data-grupo-padre="'+nodoData.grupoPadre+'">' 
+                nodoString = '<li class="group" data-grupo="'+nodoData.grupo+'" data-grupo-padre="'+nodoData.grupoPadre+'" >' 
                 + '<div class="header">' + (nodoData.iniciador ? '<span class="label iniciador">Iniciador</span>' : '')+'<a href="#" class="name">'+nodoData.name+'</a>'
                 + '<span class="condicion">'+nodoData.condicion+'</span>'
                 + '<a class="btn agregar-grupo">Encadenamiento</a>'
@@ -38,24 +38,34 @@
             _.each(this.arbol, function (nodoData) {
                arbol += getNodo(nodoData, '');
             });
-            //return new Handlebars.SafeString('<ul class="arbol"><li class="group"><div><a href="#">Nombre de grupo 1</a></div><div>Condiciones mayor a x y unidad de medida</div>  <span class="label">Iniciador</span><a class="btn">Agregar grupo</a><ul><li class="group"><div><a href="#">Nombre de grupo 1-1</a></div><div>Condiciones mayor a x y unidad de medida</div> <a class="btn">Agregar grupo</a><ul></ul><div>Sin grupos hijos</div></li><li class="group"><div><a href="#">Nombre de grupo 1-2</a></div><div>Condiciones mayor a x y unidad de medida</div>    <a class="btn">Agregar grupo</a><ul></ul><div>Sin grupos hijos</div></li></ul><div class="hidden">Sin grupos hijos</div></li><li class="group"><div><a href="#">Nombre de grupo 2</a></div><div>Condiciones mayor a x y unidad de medida</div>  <span class="label">Iniciador</span><a class="btn">Agregar grupo</a><ul></ul><div>Sin grupos hijos</div></li></ul>');
-            //arbol += getNodo();
             arbol += '</ul>';
             return new Handlebars.SafeString(arbol);
         });
 
         Handlebars.registerHelper("regalosArbol", function (text)
         { 
-            function getNodo(nodoData) {
-                var nodo = '<li class="grupo">';
-                nodo += '<span class="name">'+nodoData.condicion+'</span>';
-                nodo += '<a class="btn" name="create-group">Encadenamiento</a>';
-                nodo += '</li>';
-                return nodo;
+            function getNodo(nodoData, buffer) {
+                buffer = '<li class="grupo" data-module="'+nodoData.module+'" data-grupo="'+nodoData.grupo+'">';
+                buffer += '<span class="name">'+nodoData.name+'</span>';
+                buffer += '<div class="btn-group">';
+                buffer += '<a class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-down"></i></a><ul>';
+                buffer += '<li><a name="create-group-descuento" data-module="QS_DescuentosFinancieros">Crear descuento</a></li>';
+                buffer += '<li><a name="create-group-volumen"  data-module="QS_VolumenRegalo">Crear descuento</a></li>';
+                buffer += '</ul></div>';
+                if(nodoData.grupos.length){
+                    buffer += '<ul class="grupos">';
+                    _.each(nodoData.grupos, function(nodoGrupo) {
+                        buffer += getNodo(nodoGrupo);
+                    });
+                    buffer += '</ul>';
+                }
+
+                buffer += '</li>';
+                return buffer;
             }
             var arbol = '<ul class="regalos-arbol">';
-            _.each(this.arbol, function (nodo) {
-                arbol += getNodo(nodo);
+            _.each(this.arbol, function (nodoGrupo) {
+                arbol += getNodo(nodoGrupo, arbol);
             });
             arbol += '</ul>';
             return new Handlebars.SafeString(arbol);
