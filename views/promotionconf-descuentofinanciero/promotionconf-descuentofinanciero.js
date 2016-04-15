@@ -15,7 +15,10 @@
 		this.meta.columns = 2;
 		this.meta.labelsOnTop = true;
 		this.module = 'QS_DescuentosFinancieros';
-		this.model = app.data.createBean(this.module);
+		//debugger;
+		var grupo = this.options && this.options.grupo_c ? this.options.grupo_c : null; 
+		var grupoPadre = this.options && this.options.grupo_padre_c ? this.options.grupo_padre_c : null; 
+		this.model = app.data.createBean(this.module, {grupo_c: grupo, grupo_padre_c: grupoPadre});
 
 		var module = _.clone(app.metadata.getModule(this.module));
 		var editableFields = ['tipo', 'precio','descuento_monto','descuento','lista_precio','cascada_1','cascada_2','cascada_3'];
