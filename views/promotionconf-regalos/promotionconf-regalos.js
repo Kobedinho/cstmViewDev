@@ -10,55 +10,7 @@
 		//self.context = options.context;
 		self._model = args.model;
 		self.parentView = args.parentView;
-		self.arbol = [
-		{
-                grupo:'1',
-                name: 'Descuento de 208 pesos a tambos',
-                grupos:[
-                    {
-                        grupo:'1-1',
-                        name: 'Descuento de 10 pesos a tambos',
-                        grupos:[
-                            {
-                                grupo:'1-1-1',
-                                name: 'Descuento de 10 pesos a tambos',
-                                grupos:[
-                                
-                                ]
-                            }, 
-                            {
-                                grupo:'1-1-2',
-                                name: 'Descuento de 10 pesos a tambos',
-                                grupos:[
-                                
-                                ]
-                            }, 
-                            {
-                                grupo:'1-1-3',
-                                name: 'Descuento de 10 pesos a tambos',
-                                grupos:[
-                                
-                                ]
-                            }, 
-                        ]
-                    },  
-                    {
-                        grupo:'1-2',
-                        name: 'Descuento de 10 pesos a tambos',
-                        grupos:[
-                        
-                        ]
-                    },    
-                ]
-            },
-            {
-                grupo:'2',
-                name: 'Descuento de 10% tambos',
-                grupos:[
-                        
-                ]
-            }
-		];
+		self.arbol = [];
 		self.grupos = {};
 	},
 	_renderHtml: function(){
