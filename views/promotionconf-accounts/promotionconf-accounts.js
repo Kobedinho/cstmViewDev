@@ -20,7 +20,7 @@
 		chkAccountFilter.on('change',function(hdl){
 			if(self.allAccounts){
 				var msg = "La promoción esta configurada para que aplique a todas las cuentas, si desea puede modificar este valor editando la promoción... ";
-				app.alert.show('notifica_usuario_cuentas', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 15000,});
+				app.alert.show('notifica_usuario_cuentas', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 9000,});
 				chkAccountFilter.val(true);
 				chkAccountFilter.attr('checked', true);
 			}
@@ -31,6 +31,7 @@
 		btnShowCatalogAccount.on('click',function(hdl){
 			self._showAccountsDrawer();
 		});
+		//self.parentView.renderedStep
 		if(!self.model.get('todo_grupo_c') && !self.model.get('todas_companias_c')){
 			self.allAccounts = false;
 			chkAccountFilter.val(false);
@@ -51,8 +52,8 @@
 		}
 		else{
 			// alertando al usuario que puede pasar al siguiente paso porque la promocion aplica para todas las cuentas
-			var msg = "Puedes continuar con el paso 2, la promoción aplica para todas las cuentas... ";
-			app.alert.show('notifica_usuario_cuentas', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 15000,});
+			var msg = "La promoción aplica para todas los clientes ";
+			app.alert.show('notifica_usuario_cuentas', { level: 'info', messages: msg, title: 'INFO: ',autoClose: true, autoCloseDelay: 9000,});
 			self.allAccounts = true;
 		}
 		// 

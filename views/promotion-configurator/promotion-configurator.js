@@ -5,19 +5,21 @@
 		
 		var moduleName = 'Accounts';
         self.accountModel = app.data.createBean(moduleName);
+        self.renderedStep = 0;
 	},
 	render: function(){
 		this._super('render', arguments);
 		var self = this;
-		self._initWizard();
 		self._showCustomViews();
 		$("#configurator_close_drawer").on('click',function(){
 			app.once('app:view:change', self.dispose);
     		app.drawer.close();
     	});
+    	self._initWizard();
 	},
 	_initWizard : function (){
 		/* Gestion de wizard y forms */
+		var self = this; 
 		var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
         allNextBtn = $('.nextBtn'),
@@ -36,6 +38,7 @@
 				allWells.hide();
 				$target.show();
 				$target.find('input:eq(0)').focus();
+				self._renderViews($target.attr('id'));
 			}
 		});
 		  
@@ -62,9 +65,22 @@
 			}
 			if (isValid)
 				nextStepWizard.removeAttr('disabled').trigger('click');
+
+			//self._renderViews(curStepBtn);
 		});
 
 		$('div.setup-panel div a.btn-primary').trigger('click');
+	},
+	_renderViews: function(step){
+		var self = this;
+		debugger;
+		switch(step){
+			case 'step-1': if(self.renderedStep<1){ self.accountsView.render(); self.renderedStep=1 } break;
+			case 'step-2': if(self.renderedStep<2){ self.usersView.render(); self.renderedStep=2 } break;
+			case 'step-3': if(self.renderedStep<3){ self.listasView.render(); self.renderedStep=3 } break;
+			case 'step-4': if(self.renderedStep<4){ self.productosView.render(); self.renderedStep=4 } break;
+			case 'step-5': if(self.renderedStep<5){ self.regalosView.render(); self.renderedStep=5 } break;
+		}
 	},
 	_showCustomViews: function(){
 		var self = this;
@@ -78,7 +94,7 @@
 			parentView : self,
 		});
 		$accountContent.append(self.accountsView.$el);
-        self.accountsView.render();
+        //self.accountsView.render();
         // asesores
         var $usersContent = $(self.$el.find("#view_promotionconf_asesores"));
 		self.usersView = app.view.createView({
@@ -89,7 +105,7 @@
 			parentView : self, 
 		});
 		$usersContent.append(self.usersView.$el);
-        self.usersView.render();
+        //self.usersView.render();
         // Listas precio
         var $listasContent = $(self.$el.find("#view_promotionconf_listaprecios"));
 		self.listasView = app.view.createView({
@@ -100,7 +116,7 @@
 			parentView : self,
 		});
 		$listasContent.append(self.listasView.$el);
-        self.listasView.render();
+        //self.listasView.render();
 
         // productos
         var $productosContent = $(self.$el.find("#view_promotionconf_productos"));
@@ -113,7 +129,7 @@
 		});
 		//self.layout._components.push(self.productosView);
 		$productosContent.append(self.productosView.$el);
-        self.productosView.render();
+        //self.productosView.render();
         // regalos
         var $regalosContent = $(self.$el.find("#view_promotionconf_regalos"));
 		self.regalosView = app.view.createView({
@@ -125,7 +141,7 @@
 		});
 		//self.layout._components.push(self.regalosView);
 		$regalosContent.append(self.regalosView.$el);
-        self.regalosView.render();
+        //self.regalosView.render();
 	},
 	// vistas personalizadas
 	// record, selection_list
