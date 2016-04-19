@@ -1,3 +1,25 @@
+<style>
+    .contentList ul{
+        list-style: none;
+    }
+    .contentList .pp-arbol{
+        margin: 1em 0;
+    }
+    .contentList li.grupo{
+        padding: 0.5em;
+        border: solid 1px #ccc;
+    }
+    .contentList li.grupo .header,
+    .contentList li.grupo .sin-grupos
+    {
+        margin: 0.5em 0;
+    }
+    .contentList li.grupo .header .iniciador,
+    .contentList li.grupo .header a.name
+    {
+        margin-right: 0.5em;
+    }
+</style>
 <div class="row-fluid contentList" style="margin-top: 1em;">
     <h4>Configuración de regalos</h4>
     <div class="span12">
@@ -14,38 +36,7 @@
     </div>
     <div class="span6">
         {{#regalosArbol}}{{arbol}}{{/regalosArbol}}
-        {{!-- <ul>
-            <li>Vol1</li>
-            <li><ul>
-                <li>desc1-1</li>
-                <li>desc1-2</li>
-                <li>desc1-3</li>
-                <li>desc1-4</li>
-            </ul></li>
-            <li>Vol2</li>
-            <li><ul>
-                <li>desc2-1</li>
-                <li>desc2-2</li>
-                <li>desc2-3</li>
-                <li>desc2-4</li>
-            </ul></li>
-            <li>Vol3</li>
-            <li><ul>
-                <li>desc2-1</li>
-                <ul><li>Vol4</li></ul>
-            </ul></li>
-        </ul> --}}
     </div>
-	<!--<div class="span3 "  >
-        <label class="control-label">Tipo de regalo</label>
-        <select id="tipoRegalo" >
-        	<option value="volumen">Volumen de regalo</option>
-        	<option value="descuento">Descuento financiero</option>
-        </select>
-    </div>
-    <div class="span4" style="margin-top: 2em;">
-	    <span class="form-control btn regalos" ><i class="fa fa-search"></i> Crear regalo </span>
-	</div>-->
 </div>
 <div class="row groupContent hidden" style="margin-top: 1em;">
     <div class="nvoGrupo-content span12" ></div>

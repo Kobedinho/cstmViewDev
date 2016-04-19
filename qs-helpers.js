@@ -48,9 +48,9 @@
                 buffer = '<li class="grupo" data-module="'+nodoData.module+'" data-grupo="'+nodoData.grupo+'">';
                 buffer += '<span class="name">'+nodoData.name+'</span>';
                 buffer += '<div class="btn-group">';
-                buffer += '<a class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-down"></i></a><ul>';
+                buffer += '<a class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-down"></i></a><ul class="dropdown-menu">';
                 buffer += '<li><a name="create-group-descuento" data-module="QS_DescuentosFinancieros">Crear descuento</a></li>';
-                buffer += '<li><a name="create-group-volumen"  data-module="QS_VolumenRegalo">Crear descuento</a></li>';
+                buffer += '<li><a name="create-group-volumen"  data-module="QS_VolumenRegalo">Crear volumen de regalo</a></li>';
                 buffer += '</ul></div>';
                 if(nodoData.grupos.length){
                     buffer += '<ul class="grupos">';
@@ -58,6 +58,9 @@
                         buffer += getNodo(nodoGrupo);
                     });
                     buffer += '</ul>';
+                }
+                else{
+                    buffer += '<div class="sin-grupos">Sin grupos hijos</div>';
                 }
 
                 buffer += '</li>';

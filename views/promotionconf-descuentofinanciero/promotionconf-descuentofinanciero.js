@@ -18,10 +18,12 @@
 		//debugger;
 		var grupo = this.options && this.options.grupo_c ? this.options.grupo_c : null; 
 		var grupoPadre = this.options && this.options.grupo_padre_c ? this.options.grupo_padre_c : null; 
-		this.model = app.data.createBean(this.module, {grupo_c: grupo, grupo_padre_c: grupoPadre});
+		var promocionId = this.options.idPromo ? this.options.idPromo : null; 
+		this.model = app.data.createBean(this.module, {grupo_c: grupo, grupo_padre_c: grupoPadre, qs_descuentosfinancieros_qs_promocionesqs_promociones_ida: promocionId});
+		this.collection = app.data.createBeanCollection(this.module);
 
 		var module = _.clone(app.metadata.getModule(this.module));
-		var editableFields = ['tipo', 'precio','descuento_monto','descuento','lista_precio','cascada_1','cascada_2','cascada_3'];
+		var editableFields = ['name', 'tipo', 'precio','descuento_monto','descuento','lista_precio','cascada_1','cascada_2','cascada_3'];
 
 		_.each(editableFields, function (item) {
 			//module.fields[item].template = 'edit';
@@ -73,7 +75,7 @@
 			}
 		}
 		this.$el.find('textarea[name="paste"]').val('');
-		if(showSaveButton){
+		if(this.model.get('name') && showSaveButton){
 			this.$el.find('.paste-container').removeClass('hidden');
 		}
 		else{
@@ -81,7 +83,18 @@
 		}
 	},
 	_handlerSave: function (argument) {
-		this.trigger('onSave', this.model);		
+		var self = this;
+		var descuentosCollection = app.data.createBeanCollection('QS_DescuentosFinancieros');
+		this.collection.each(function (item) {
+			var descuento = app.data.createBean('QS_DescuentosFinancieros');
+			descuento.set(self.model.toJSON());
+			descuento.set({
+				name: self.model.get('name') + ' - ' + item.id,
+				qs_descuentosfinancieros_producttemplatesproducttemplates_ida: item.id
+			});
+			descuentosCollection.add(descuento);
+		});
+		this.trigger('onSave', this.model, descuentosCollection);		
 	},
 	_handlerCancel: function (argument) {
 		this.trigger('onCancel');
