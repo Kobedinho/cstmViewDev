@@ -31,6 +31,7 @@
 		var tipoRegalo = '';
 		var grupoPadre = null;
 		var grupo = null;
+		var iniciador = 0;
 		if(evt.target && evt.target.dataset.module){
 			tipoRegalo = evt.target.dataset.module;
 			grupoPadre = $(evt.target).closest('li.grupo').data('grupo');
@@ -39,6 +40,7 @@
 		else{
 			tipoRegalo = self.$el.find("#tipoRegalo").val();
 			grupo = (this.arbol.length + 1).toString();
+			iniciador = 1;
 		}
 
 		if(tipoRegalo==="QS_VolumenRegalo"){
@@ -48,7 +50,8 @@
 				module: 'QS_Promociones',
 				idPromo: self.model.get('id'),
 				grupo_padre_c: grupoPadre,
-				grupo_c: grupo
+				grupo_c: grupo,
+				iniciador_c: iniciador
 			});
 		}
 		else{
