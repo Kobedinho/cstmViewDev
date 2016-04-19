@@ -1,7 +1,7 @@
 ({
 	plugins: [
+		'SugarLogic',
         'GridBuilder',
-        'SugarLogic',
     ],
 	events:{
 		'click span[name="cancel_group"]':'_cancelNewGroup',
@@ -10,26 +10,29 @@
 		'paste #skus_volumen_regalo': '_handlerPaste',
 	},
 	initialize:function(args){
-		this._super('initialize', arguments);
+		this._super('initialize', arguments);		
 		var self = this;
 		var modelData = _.extend({ grupo_padre_c:'', grupo_c:'1', iniciador_c: true }, this.options.regalo||{});
 		self.model = app.data.createBean('QS_VolumenRegalo', modelData);
 		if(self.options.idPromo){
 			self.model.set('qs_volumenregalo_qs_promocionesqs_promociones_ida',self.options.idPromo);
 		}
+
+		var recordView = app.metadata.getView('QS_VolumenRegalo','record');
+		self.meta.dependencies = recordView.dependencies;
+
 		self.meta.fields = [], self.meta.columns = 2, self.action = 'edit', this.module = 'QS_VolumenRegalo';
 		var module = _.clone(app.metadata.getModule('QS_VolumenRegalo'));
-		var editableFields = ['tipo','piezas','maximo','precio_c'];
+		var editableFields = ['name','tipo','piezas']; //,'precio_c'
 		_.each(editableFields, function (item) {
 			self.meta.fields.push(module.fields[item]);
 		});
-		self.meta.fields.push({ name: 'qs_volumenregalo_producttemplatesproducttemplates_ida', type: 'relate', vname: 'LBL_PRODUCTTEMPLATES_QS_VOLUMENREGALO_1_FROM_PRODUCTTEMPLATES_TITLE'});
+		//self.meta.fields.push({ name: 'qs_volumenregalo_producttemplatesproducttemplates_ida', type: 'relate', vname: 'LBL_PRODUCTTEMPLATES_QS_VOLUMENREGALO_1_FROM_PRODUCTTEMPLATES_TITLE'});
+		var recordView = app.metadata.getView('QS_VolumenRegalo','record');
+		self.meta.dependencies = recordView.dependencies;
 		self.grid = self.getGridBuilder(self.meta).build().grid;
 
 		self.model.on('change',_.bind( self._validateFields, self ));
-      	this.action = 'edit';
-		//this._initListView();
-
 	},
 	_initListView: function (argument) {
 		var self = this;
@@ -87,6 +90,9 @@
 	},
 	_renderHtml: function(){
 		this._super('_renderHtml', arguments);
+		var self = this;
+		var tipo = self.getField('tipo');
+		tipo.def.options = {"": "", Cualquiera_de: "Cualquiera de", Producto: "Producto"};
 	},
 	_renderSkuList: function() {
 		var self = this;

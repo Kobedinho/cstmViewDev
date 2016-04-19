@@ -43,7 +43,7 @@ array (
                         'event' => 'button:configura_promocion:click',
                         'name' => 'configura_promocion',
                         'label' => 'Configurar promocion',//'LBL_CONFIGURA_PROMOCION_LABEL',
-                        'acl_action' => '',
+                        'acl_action' => 'edit',
                     ),
                     array(
                         'type' => 'divider',

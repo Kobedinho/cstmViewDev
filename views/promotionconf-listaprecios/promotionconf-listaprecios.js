@@ -46,8 +46,8 @@
 		chkListaFilter.trigger('change');
 		$(self.$el.find('.precio_folios_content')).show();
 		$(self.$el.find('.selected_precios_list')).show();
-		// permitiendo que se elijan cuentas
-		self.listasCollection = self._model.getRelatedCollection('qs_promociones_qs01_listasprecio');//('qs_promociones_accounts');
+		// permitiendo que se elijan listas de precio
+		self.listasCollection = self._model.getRelatedCollection('qs_promociones_qs01_listasprecio');
 		self.listasCollection.fetch({relate: true,
     		success: function(records) {
 	    		self._showListasTable(self.listasCollection);
