@@ -73,7 +73,6 @@
 	},
 	_renderViews: function(step){
 		var self = this;
-		debugger;
 		switch(step){
 			case 'step-1': if(self.renderedStep<1){ self.accountsView.render(); self.renderedStep=1 } break;
 			case 'step-2': if(self.renderedStep<2){ self.usersView.render(); self.renderedStep=2 } break;
