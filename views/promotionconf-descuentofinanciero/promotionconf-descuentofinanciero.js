@@ -16,10 +16,12 @@
 		this.meta.labelsOnTop = true;
 		this.module = 'QS_DescuentosFinancieros';
 		//debugger;
-		var grupo = this.options && this.options.grupo_c ? this.options.grupo_c : null; 
-		var grupoPadre = this.options && this.options.grupo_padre_c ? this.options.grupo_padre_c : null; 
-		var promocionId = this.options.idPromo ? this.options.idPromo : null; 
-		this.model = app.data.createBean(this.module, {grupo_c: grupo, grupo_padre_c: grupoPadre, qs_descuentosfinancieros_qs_promocionesqs_promociones_ida: promocionId});
+		this.model = app.data.createBean(this.module, {
+			grupo_c: (this.options && this.options.grupo_c ? this.options.grupo_c : null), 
+			grupo_padre_c: (this.options && this.options.grupo_padre_c ? this.options.grupo_padre_c : null), 
+			qs_descuentosfinancieros_qs_promocionesqs_promociones_ida: (this.options.idPromo ? this.options.idPromo : null),
+			iniciador: (this.options.iniciador_c ? this.options.iniciador_c : false)
+		});
 		this.collection = app.data.createBeanCollection(this.module);
 
 		var module = _.clone(app.metadata.getModule(this.module));
