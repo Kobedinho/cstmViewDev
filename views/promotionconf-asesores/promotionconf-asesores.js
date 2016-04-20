@@ -103,6 +103,7 @@
 		});
 		$usersContent.html(self.usersList.$el);
         self.usersList.render();
+        self.usersList.$el.find('a[data-event="list:preview:fire"]').addClass('hidden');
 	},
 	_changeFilterVisibility : function(hdl,idElement){
 		if(!$(hdl).is(':checked')){

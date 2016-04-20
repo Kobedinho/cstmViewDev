@@ -93,6 +93,7 @@
 		});
 		$listaContent.html(self.listasLayout.$el);
         self.listasLayout.render();
+        self.listasLayout.$el.find('a[data-event="list:preview:fire"]').addClass('hidden');
 	},
 	_changeFilterVisibility : function(hdl,idElement){
 		var self = this;
