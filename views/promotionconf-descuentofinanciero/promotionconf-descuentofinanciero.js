@@ -20,7 +20,7 @@
 			grupo_c: (this.options && this.options.grupo_c ? this.options.grupo_c : null), 
 			grupo_padre_c: (this.options && this.options.grupo_padre_c ? this.options.grupo_padre_c : null), 
 			qs_descuentosfinancieros_qs_promocionesqs_promociones_ida: (this.options.idPromo ? this.options.idPromo : null),
-			iniciador: (this.options.iniciador_c ? this.options.iniciador_c : false)
+			iniciador_c: (this.options.iniciador_c ? this.options.iniciador_c : false)
 		});
 		this.collection = app.data.createBeanCollection(this.module);
 
@@ -87,6 +87,9 @@
 	_handlerSave: function (argument) {
 		var self = this;
 		var descuentosCollection = app.data.createBeanCollection('QS_DescuentosFinancieros');
+		var data = {
+			requests: []
+		};
 		this.collection.each(function (item) {
 			var descuento = app.data.createBean('QS_DescuentosFinancieros');
 			descuento.set(self.model.toJSON());
@@ -95,8 +98,22 @@
 				qs_descuentosfinancieros_producttemplatesproducttemplates_ida: item.id
 			});
 			descuentosCollection.add(descuento);
+
+			data.requests.push({
+				url: '/v10/QS_DescuentosFinancieros',
+				method: 'POST',
+				data: JSON.stringify(descuento.toJSON())
+			});
 		});
-		this.trigger('onSave', this.model, descuentosCollection);		
+		debugger;
+		app.api.call('create', '/rest/v10/bulk', data, {
+			success:  _.bind(function (argument) {
+				this.trigger('onSave', this.model, descuentosCollection);		
+			}, this), 
+			error: function (argument) {
+				this.trigger('onSave');
+			}
+		});
 	},
 	_handlerCancel: function (argument) {
 		this.trigger('onCancel');

@@ -5,7 +5,7 @@
 
 	initialize: function (argument) {
 		this._super('initialize', arguments);
-		
+		//debugger;
 		this._initGroupListView();
 	},
 
@@ -42,7 +42,7 @@
 		});
 
 		self.groupLisView =  app.view.createView({
-			context: context,
+			context: this.context,
 			type: 'promotionconf-productos-group-list',
 			name: 'promotionconf-productos-group-list',
 			module: 'QS_Promociones'
