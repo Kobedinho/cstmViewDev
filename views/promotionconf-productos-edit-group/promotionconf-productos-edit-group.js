@@ -49,22 +49,36 @@
 	_handlerSave: function () {
 		var self = this;
 		if(this._validate()){
+			var data = {
+				requests: []
+			};
+			var productosCriterioCollection =  app.data.createBeanCollection('QS_ProductosCriterio');
 			this.collection.each(function (model) {
-				model.set({
-					condicion: self.model.get('condicion'),
-					cantidad: self.model.get('cantidad'),
-					tipo_unidad_c: self.model.get('tipo_unidad_c'),
-					ycantidad_c: self.model.get('ycantidad_c'),
-					cantidad_minima_c: self.model.get('cantidad_minima_c'),
-					limitado_a_c: self.model.get('limitado_a_c'),
-					iniciador_c: self.model.get('iniciador_c'),
-					grupo_c: self.model.get('grupo_c'),
-					grupo_padre_c: self.model.get('grupo_padre_c'),
-					qs_productoscriterio_producttemplatesproducttemplates_ida: model.get('id'),
+				var productoCriterio = app.data.createBean('QS_ProductosCriterio');
+				productoCriterio.set(self.model.toJSON());
+				productoCriterio.set({
+					qs_productoscriterio_producttemplatesproducttemplates_ida: model.get('id')
 				});
+				data.requests.push({
+					url: '/v10/QS_ProductosCriterio',
+					method: 'POST',
+					data: JSON.stringify(productoCriterio.toJSON())
+				});
+				productosCriterioCollection.add(productoCriterio);
+			});
+			this.trigger('onSave', this.model, productosCriterioCollection, this.options.nodoPadre);
+			app.api.call('create', '/rest/v10/bulk', data, {
+				success: _.bind(function(argument) {
+					// body...
+				}, this),
+				error: _.bind(function(argument) {
+					
+				}, this)
 			});
 		}
-		this.trigger('onSave', this.model, this.collection, this.options.nodoPadre);
+		else{
+				
+		}
 	},
 
 	_validate: function (argument) {
