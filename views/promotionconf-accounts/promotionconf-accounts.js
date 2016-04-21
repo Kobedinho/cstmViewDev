@@ -102,9 +102,13 @@
 			name: 'list',
 			module: contextCstm.module,
 		});
+
+		var listButtonView = self.accountsList._components.reverse()[0]
+        listButtonView.paginationComponent.meta.rowactions.actions.shift(); 
+
 		$accountContent.html(self.accountsList.$el);
         self.accountsList.render();
-        self.accountsList.$el.find('a[data-event="list:preview:fire"]').addClass('hidden');
+        //self.accountsList.$el.find('a[data-event="list:preview:fire"]').addClass('hidden');
 	},
 	_changeFilterVisibility : function(hdl,idElement){
 		if(!$(hdl).is(':checked')){

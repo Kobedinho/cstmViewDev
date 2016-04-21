@@ -91,9 +91,13 @@
 			name: 'list',
 			module: contextCstm.module,
 		});
-		$listaContent.html(self.listasLayout.$el);
+		
+        //self.listasLayout.$el.find('a[data-event="list:preview:fire"]').addClass('hidden');
+        var listButtonView = self.listasLayout._components.reverse()[0]
+        listButtonView.paginationComponent.meta.rowactions.actions.shift(); 
+        
+        $listaContent.html(self.listasLayout.$el);
         self.listasLayout.render();
-        self.listasLayout.$el.find('a[data-event="list:preview:fire"]').addClass('hidden');
 	},
 	_changeFilterVisibility : function(hdl,idElement){
 		var self = this;
@@ -127,6 +131,7 @@
         this.listasLayout.context.resetLoadFlag(false);
         this.listasLayout.context.set('skipFetch', false);
         this.listasLayout.context.loadData(options);
+        debugger;
 	},
 	_handlerClose: function(){
 		if(this.listasLayout)
